@@ -68,4 +68,11 @@ re: fclean all
 ```
 Thus, build files (`.o`) will be outputted to the `build` directory, while the final executable will be sent to `bin`.
 
-`saleen new` can be run in `bench` mode to support the inclusion of an additional directory, `benches` which will, in the future, be used to run integrated benchmarks with `saleen bench`.
+`saleen new` can be run in `bench` mode to support the inclusion of an additional directory, `benches` which will, in the future, be used to run integrated benchmarks with `saleen bench`. To run `saleen new` in bench mode, toggle the following flag:
+```sh
+saleen new my_project -b
+```
+Or,
+```sh
+saleen new my_project --make-bench
+```
