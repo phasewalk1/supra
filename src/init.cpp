@@ -7,8 +7,11 @@
 #include <stdexcept>
 #include <string>
 
+// brief: Overloaded constructor
 Initializer::Initializer(std::string path) { this->path = path; }
 
+// brief: Creates a new directory and initializes a git repository
+// params: bench_mode(bool) - Whether or not to create a benchmark directory
 void Initializer::init_dir(bool bench_mode) {
   if (fs ::exists(this->path) && !(fs ::is_empty(this->path))) {
     throw std::runtime_error("Error: Directory already exists");
@@ -56,6 +59,7 @@ void Initializer::init_dir(bool bench_mode) {
   return;
 }
 
+// brief: Creates a Makefile in the project directory
 void Initializer::makefile() {
   std::ofstream ofs(this->path + "/Makefile");
   ofs << "NAME = " << this->path
@@ -82,6 +86,7 @@ void Initializer::makefile() {
          ".PHONY: all clean fclean re\n";
 }
 
+// brief: Initializes a git repository in the project directory
 void Initializer::make_git() {
   std::string cmd = "git init " + this->path + "> /dev/null 2>&1";
   int result = std::system(cmd.c_str());

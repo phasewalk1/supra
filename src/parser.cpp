@@ -1,10 +1,15 @@
 #include "parser.hpp"
 
+// brief: Overloaded Parser constructor
+// param: argc: int - number of arguments, argv: char** - array of arguments
+// return: Parser - a Parser object
 Parser::Parser(int argc, char** argv) {
   this->argc = argc;
   this->argv = argv;
 }
 
+// brief: Parses the first argument passed, i.e. the mode to run in
+// return: OPT - the mode to run in
 OPT Parser::parse() {
   if (!(argc > 1)) {
     throw std::runtime_error("Error: No arguments given");
@@ -19,6 +24,8 @@ OPT Parser::parse() {
   }
 }
 
+// brief: Parses the manifest .toml file
+// return: toml::table - the parsed manifest file
 toml::table Parser::get_config() {
   toml::table cfg;
   try {
@@ -31,6 +38,9 @@ toml::table Parser::get_config() {
   return cfg;
 }
 
+// brief: Parses the package section of the manifest file
+// param: cfg: toml::table - the parsed manifest file
+// return: Package - the parsed package section
 Package Parser::to_package(toml::table cfg) {
   Package pkg;
 
@@ -47,6 +57,9 @@ Package Parser::to_package(toml::table cfg) {
   return pkg;
 }
 
+// brief: Parses the dependencies section of the manifest file
+// param: cfg: toml::table - the parsed manifest file
+// return: std::vector<Dependency> - the parsed dependencies section
 std::vector<Dependency> Parser::to_deps(toml::table cfg) {
   std::vector<Dependency> deps;
 
@@ -61,6 +74,9 @@ std::vector<Dependency> Parser::to_deps(toml::table cfg) {
   return deps;
 }
 
+// brief: Prints the dependencies section of the manifest file
+// param: deps: std::vector<Dependency> - the parsed dependencies section
+// dev: This is a debug function
 inline void Parser::debug_deps(std::vector<Dependency> deps) {
   for (auto& dep : deps) {
     for (const auto& [key, value] : dep.dep) {
@@ -69,6 +85,9 @@ inline void Parser::debug_deps(std::vector<Dependency> deps) {
   }
 }
 
+// brief: Parses the manifest file into a Manifest object
+// param: cfg: toml::table - the parsed manifest file
+// return: Manifest - the parsed manifest file
 Manifest Parser::to_manifest(toml::table cfg) {
   Manifest manifest;
 

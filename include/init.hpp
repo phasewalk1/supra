@@ -17,8 +17,12 @@
 #include <fstream>
 #include <string>
 
+// brief: Namespace for filsystem library
 namespace fs = std::filesystem;
 
+// brief: In charge of initializing a new project
+// dev: Creates a new directory, a manifest file, a makefile, and a git
+// repository
 class Initializer {
 public:
   Initializer(std::string path);

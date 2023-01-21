@@ -15,6 +15,7 @@
 
 #include "parser.hpp"
 
+// brief: Runs `saleen` in the specified mode
 class Runner {
 public:
   Runner(int argc, char** argv, OPT mode);
