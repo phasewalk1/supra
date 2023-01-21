@@ -19,3 +19,53 @@ You can now use `saleen` to instantiate new C++ projects
 ```sh
 saleen new my_project
 ```
+This will create a new workspace entitled `my_project` with the following directory structure
+* .git/
+* bin/
+* build/
+* include/
+* src/
+  * main.cpp
+* tests/
+* Makefile
+
+The default Makefile will look like this:
+```Makefile
+CC = g++
+CFLAGS = -Wall -Wextra -Werror -std=c++17
+
+SRC_DIR = src
+INC_DIR = include
+OBJ_DIR = build
+BIN_DIR = bin
+
+SRC = $(wildcard $(SRC_DIR)/*.cpp)
+OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+
+NAME = my_project
+
+all: $(BIN_DIR)/$(NAME)
+
+$(BIN_DIR)/$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $(OBJ)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
+
+clean:
+	rm -rf $(OBJ_DIR)
+
+wipe:
+	rm $(BIN_DIR)/$(NAME)
+
+fclean: clean
+	rm -f $(BIN_DIR)/$(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
+```
+Thus, build files (`.o`) will be outputted to the `build` directory, while the final executable will be sent to `bin`.
+
+`saleen new` can be run in `bench` mode to support the inclusion of an additional directory, `benches` which will, in the future, be used to run integrated benchmarks with `saleen bench`.
