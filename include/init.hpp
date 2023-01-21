@@ -14,6 +14,7 @@
 /* ************************************************************************** */
 
 #include <filesystem>
+#include <fstream>
 #include <string>
 
 namespace fs = std::filesystem;
@@ -21,7 +22,8 @@ namespace fs = std::filesystem;
 class Initializer {
 public:
   Initializer(std::string path);
-  void init_dir();
+  void init_dir(bool bench_mode);
+  void makefile();
   void make_git();
 
 private:

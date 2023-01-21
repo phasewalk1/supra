@@ -1,15 +1,34 @@
-saleen: main.o init.o
-		g++ -std=c++17 -o saleen src/main.o src/init.o
+CC = g++
+CFLAGS = -Wall -Wextra -Werror -std=c++17
 
-main.o: src/main.cpp src/init.hpp
-		g++ -std=c++17 -c src/main.cpp -o src/main.o
+SRC_DIR = src
+INC_DIR = include
+OBJ_DIR = build
+BIN_DIR = bin
 
-init.o: src/init.cpp src/init.hpp
-		g++ -std=c++17 -c src/init.cpp -o src/init.o
+SRC = $(wildcard $(SRC_DIR)/*.cpp)
+OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+
+NAME = saleen
+
+all: $(BIN_DIR)/$(NAME)
+
+$(BIN_DIR)/$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $(OBJ)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:
-		rm -f src/*.o
+	rm -rf $(OBJ_DIR)
 
 wipe:
-		rm saleen
+	rm $(BIN_DIR)/$(NAME)
 
+fclean: clean
+	rm -f $(BIN_DIR)/$(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

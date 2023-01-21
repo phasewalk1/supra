@@ -26,7 +26,7 @@ public:
   Parser(int argc, char** argv);
   OPT parse();
 
-protected:
+private:
   int argc;
   char** argv;
 };

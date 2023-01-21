@@ -9,13 +9,23 @@
 int main(int argc, char** argv) {
   Parser parser(argc, argv);
   OPT opt = parser.parse();
-  if (opt == NEW) {
+  if (opt == OPT::NEW) {
     if (argc < NEW_MIN_ARGC) {
       throw std::runtime_error("Error: No path given");
     } else {
       Initializer init = Initializer(std::string(argv[2]));
-      init.init_dir();
-      init.make_git();
+      bool bench_mode;
+      if (argc == NEW_MIN_ARGC) {
+        bench_mode = false;
+      } else {
+        std::string flag = std::string(argv[3]);
+        if (flag == "-b" || flag == "--make-bench") {
+          bench_mode = true;
+        } else {
+          throw std::runtime_error("Error: Invalid flag");
+        }
+      }
+      init.init_dir(bench_mode);
     }
   }
   return 0;
