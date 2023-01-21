@@ -9,6 +9,7 @@
 int main(int argc, char** argv) {
   Parser parser(argc, argv);
   OPT opt = parser.parse();
+  // ********** NEW **********
   if (opt == OPT::NEW) {
     if (argc < NEW_MIN_ARGC) {
       throw std::runtime_error("Error: No path given");
@@ -27,6 +28,12 @@ int main(int argc, char** argv) {
       }
       init.init_dir(bench_mode);
     }
+  }
+  // ********** END NEW **********
+
+  // ********** CHECK **********
+  else if (opt == OPT::CHECK) {
+    toml::table cfg = parser.get_config();
   }
   return 0;
 }

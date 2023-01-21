@@ -6,6 +6,8 @@ INC_DIR = include
 OBJ_DIR = build
 BIN_DIR = bin
 
+INCLUDE_DIRS = -I $(INC_DIR) -I /usr/local/include
+
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 

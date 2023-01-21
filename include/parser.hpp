@@ -13,39 +13,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "toml.hpp"
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
 
 enum OPT {
   NEW,
+  CHECK,
 };
 
 class Parser {
 public:
   Parser(int argc, char** argv);
   OPT parse();
+  toml::table get_config();
 
 private:
   int argc;
   char** argv;
 };
-
-Parser::Parser(int argc, char** argv) {
-  this->argc = argc;
-  this->argv = argv;
-}
-
-OPT Parser::parse() {
-  if (!(argc > 1)) {
-    throw std::runtime_error("Error: No arguments given");
-  } else {
-    if (strcmp(argv[1], "new") == 0) {
-      return NEW;
-    } else {
-      throw std::runtime_error("Error: Invalid argument");
-    }
-  }
-}
 
 #endif // __PARSER_H__

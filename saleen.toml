@@ -1,0 +1,7 @@
+[package]
+name = "saleen"
+version = "0.1.0"
+authors = ["phasewalk1"]
+
+[deps]
+tomlplusplus = "1.2.1"
