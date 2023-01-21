@@ -1,5 +1,6 @@
-#include "new.hpp"
+#include "init.hpp"
 
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -51,4 +52,15 @@ void Initializer::init_dir() {
   }
 
   return;
+}
+
+void Initializer::make_git() {
+  std::string cmd = "git init " + this->path + "> /dev/null 2>&1";
+  int result = std::system(cmd.c_str());
+  if (result == 0) {
+    std::cout << "Initialized git repository in " << this->path << std::endl;
+  } else {
+    std::cout << "Error: Failed to initialize git repository in " << this->path
+              << std::endl;
+  }
 }

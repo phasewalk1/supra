@@ -1,15 +1,15 @@
-#ifndef __NEW_H__
-#define __NEW_H__
+#ifndef __INIT_H__
+#define __INIT_H__
 
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new.hpp                                            :+:      :+:    :+:   */
+/*   init.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:29 by ethangalluc       #+#    #+#             */
-/*   Updated: 2023/01/21 01:57:30 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 02:43:24 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ class Initializer {
 public:
   Initializer(std::string path);
   void init_dir();
+  void make_git();
 
 private:
   std::string path;
 };
 
-#endif // __NEW_H__
+#endif // __INIT_H__

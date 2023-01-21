@@ -1,4 +1,4 @@
-#include "new.hpp"
+#include "init.hpp"
 #include "parser.hpp"
 #include <iostream>
 #include <stdexcept>
@@ -15,6 +15,7 @@ int main(int argc, char** argv) {
     } else {
       Initializer init = Initializer(std::string(argv[2]));
       init.init_dir();
+      init.make_git();
     }
   }
   return 0;
