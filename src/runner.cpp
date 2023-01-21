@@ -1,25 +1,27 @@
+#include "runner.hpp"
 #include "init.hpp"
 #include "parser.hpp"
-#include <iostream>
-#include <stdexcept>
-#include <string>
 
 #define NEW_MIN_ARGC 3
 
-int main(int argc, char** argv) {
-  Parser parser(argc, argv);
-  OPT opt = parser.parse();
-  // ********** NEW **********
-  if (opt == OPT::NEW) {
-    if (argc < NEW_MIN_ARGC) {
+Runner::Runner(int argc, char** argv, OPT mode) {
+  this->argc = argc;
+  this->argv = argv;
+  this->mode = mode;
+}
+
+void Runner::run() {
+  switch (this->mode) {
+  case OPT::NEW:
+    if (this->argc < NEW_MIN_ARGC) {
       throw std::runtime_error("Error: No path given");
     } else {
-      Initializer init = Initializer(std::string(argv[2]));
+      Initializer init = Initializer(std::string(this->argv[2]));
       bool bench_mode;
-      if (argc == NEW_MIN_ARGC) {
+      if (this->argc == NEW_MIN_ARGC) {
         bench_mode = false;
       } else {
-        std::string flag = std::string(argv[3]);
+        std::string flag = std::string(this->argv[3]);
         if (flag == "-b" || flag == "--make-bench") {
           bench_mode = true;
         } else {
@@ -28,12 +30,11 @@ int main(int argc, char** argv) {
       }
       init.init_dir(bench_mode);
     }
-  }
-  // ********** CHECK **********
-  else if (opt == OPT::CHECK) {
+  case OPT::CHECK:
+    Parser parser = Parser(this->argc, this->argv);
     toml::table cfg = parser.get_config();
     Manifest manifest = parser.to_manifest(cfg);
 
-    return 0;
+    return;
   }
 }
