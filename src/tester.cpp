@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cmd/tester.hpp"
+
 #include <filesystem>
 
 namespace fs = std::filesystem;
@@ -19,7 +20,8 @@ using tester::Tester;
 
 /**
  * @brief Construct a new Tester:: Tester object
- * @dev Sets the TEST_DIR to the default value and the BUILD_CMD to the default value
+ * @dev Sets the TEST_DIR to the default value and the BUILD_CMD to the default
+ * value
  */
 Tester::Tester() {
   this->TEST_DIR = std::string("tests");
@@ -29,7 +31,8 @@ Tester::Tester() {
 
 /**
  * @brief Construct a new Tester:: Tester object
- * @dev Sets the TEST_DIR to the specified value and the BUILD_CMD to the default value
+ * @dev Sets the TEST_DIR to the specified value and the BUILD_CMD to the
+ * default value
  *
  * @param test_dir(std::string): The path to the tests/ directory
  */
@@ -53,7 +56,7 @@ void Tester::setup() {
  * @brief Gets the build command for a single test
  * @param test_path(std::string): The path to the test file
  * @return (std::string): The build command for the test
-*/
+ */
 std::string Tester::get_build_cmd(const std::string test_path) {
   std::string build_path = "build/" + test_path + ".out";
   std::string build_cmd = this->BUILD_CMD + " " + build_path + " " + test_path;
@@ -65,7 +68,7 @@ std::string Tester::get_build_cmd(const std::string test_path) {
  * @brief Gets the run command for a single test
  * @param test_path(std::string): The path to the test file
  * @return (std::string): The run command for the test
-*/
+ */
 std::string Tester::get_invoke_cmd(const std::string test_path) {
   std::string invoke_cmd = "build/" + test_path + ".out";
   return invoke_cmd;
@@ -94,12 +97,14 @@ std::map<std::string, bool> Tester::run(std::vector<std::string> test_files) {
 /**
  * @brief Dumps the map of test results to the console
  *
- * @param results(std::map<std::string, bool>): A map of test names and their results
+ * @param results(std::map<std::string, bool>): A map of test names and their
+ * results
  */
 void Tester::dump_results(std::map<std::string, bool> results) {
   std::cout << std::endl;
-  std::cout << std::string(30, '*') << " TEST RESULTS " << std::string(30, '*') << '\n';
-  for (auto const& [file, result] : results) {
+  std::cout << std::string(30, '*') << " TEST RESULTS " << std::string(30, '*')
+            << '\n';
+  for (auto const &[file, result] : results) {
     switch (result) {
     case true:
       this->logger.info("Test passed: " + file + ".cpp");
@@ -144,17 +149,18 @@ bool Tester::run_one(std::string test_path) {
     // create the build/tests directory if it doesn't exist
     this->test_builds();
     // build test
-    this->logger.debug("Building test:"); std::cout << test_path << "\n";
+    this->logger.debug("Building test:");
+    std::cout << test_path << "\n";
     this->build_test(BUILD_CMD);
     // run test
-    this->logger.debug("running test..."); std::cout << test_path << "\n";
+    this->logger.debug("running test...");
+    std::cout << test_path << "\n";
     std::string run_cmd = this->get_invoke_cmd(test_path);
     // run test
     bool passing = this->invoke_test(run_cmd);
     this->show_passing(test_path, passing);
     return passing;
-  }
-  else {
+  } else {
     throw std::runtime_error("Error: Test file does not exist");
   }
 }
@@ -176,8 +182,9 @@ void Tester::test_builds() {
  * @param build_cmd(std::string): The build command for the test
  */
 void Tester::build_test(std::string build_cmd) {
-  try { system(build_cmd.c_str()); }
-  catch (std::exception& e) {
+  try {
+    system(build_cmd.c_str());
+  } catch (std::exception &e) {
     this->logger.error("Failed building test: " + std::string(e.what()));
   }
 }

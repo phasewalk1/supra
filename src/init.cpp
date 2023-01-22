@@ -25,10 +25,12 @@
  */
 Initializer::Initializer(std::string path, bool force) {
   if (fs::exists(path) && !(fs::is_empty(path)) && !(force)) {
-    std::string err = "Error: Directory already exists and is not empty. Rerun with 'saleen new " + path + " --force' to overwrite.";
+    std::string err =
+        "Error: Directory already exists and is not empty. Rerun with 'saleen "
+        "new " +
+        path + " --force' to overwrite.";
     throw std::runtime_error(err);
-  }
-  else {
+  } else {
     this->path = path;
   }
 }
@@ -55,8 +57,7 @@ void Initializer::spinup(bool bench_mode) {
     // create manifest
     this->manifest();
     std::cout << "Created directory " << this->path << std::endl;
-  }
-  catch (const fs::filesystem_error& e) {
+  } catch (const fs::filesystem_error &e) {
     std::cout << e.what() << std::endl;
   }
 
@@ -65,7 +66,8 @@ void Initializer::spinup(bool bench_mode) {
 
 /**
  * @brief: Creates necessary subdirectories
- * @dev: This is ran after the top level directory is created, within the spinup() function
+ * @dev: This is ran after the top level directory is created, within the
+ * spinup() function
  */
 void Initializer::build_dir(bool with_benches) {
   fs::create_directory(this->path + "/src");
@@ -86,7 +88,7 @@ void Initializer::hello_world() {
   std::string src_file_path = this->path + "/src" + "/main.cpp";
   std::ofstream ofs(src_file_path);
   ofs << "#include <iostream>\n\nint main() {\n  "
-    "std::cout << \"Hello World\" << std::endl;\n  return 0;\n}\n";
+         "std::cout << \"Hello World\" << std::endl;\n  return 0;\n}\n";
   ofs.close();
 }
 
@@ -97,22 +99,24 @@ void Initializer::test_hello_world() {
   std::string test_file_path = this->path + "/tests" + "/try_main.cpp";
   std::ofstream ofs(test_file_path);
   ofs << "#include <iostream>\n\nint main() {\n  "
-    "std::string cmd = \"g++ -std=c++17 -o build/tests/try_main.o src/main.cpp\";\n"
-    "\tint build_status = std::system(cmd.c_str());\n"
-    "\tswitch (build_status) {\n"
-    "\t  case 0:\n"
-    "\t    std::cout << \"Built hello world\" << std::endl;\n"
-    "\t    break;\n"
-    "\t  case 1:\n"
-    "\t    std::cout << \"Error: Failed to build hello world\" << std::endl;\n"
-    "\t    break;\n"
-    "\t  default:\n"
-    "\t    std::cout << \"Error: Unknown error\" << std::endl;\n"
-    "\t    break;\n"
-    "\t}\n"
-    "\tcmd = \"build/tests/try_main.o\";\n"
-    "\tint run_status = std::system(cmd.c_str());\n"
-    "\treturn run_status;\n}\n";
+         "std::string cmd = \"g++ -std=c++17 -o build/tests/try_main.o "
+         "src/main.cpp\";\n"
+         "\tint build_status = std::system(cmd.c_str());\n"
+         "\tswitch (build_status) {\n"
+         "\t  case 0:\n"
+         "\t    std::cout << \"Built hello world\" << std::endl;\n"
+         "\t    break;\n"
+         "\t  case 1:\n"
+         "\t    std::cout << \"Error: Failed to build hello world\" << "
+         "std::endl;\n"
+         "\t    break;\n"
+         "\t  default:\n"
+         "\t    std::cout << \"Error: Unknown error\" << std::endl;\n"
+         "\t    break;\n"
+         "\t}\n"
+         "\tcmd = \"build/tests/try_main.o\";\n"
+         "\tint run_status = std::system(cmd.c_str());\n"
+         "\treturn run_status;\n}\n";
   ofs.close();
 }
 
@@ -123,27 +127,27 @@ void Initializer::test_hello_world() {
 void Initializer::makefile() {
   std::ofstream ofs(this->path + "/Makefile");
   ofs << "NAME = " << this->path
-    << "\n\n"
-    "CC = g++\n"
-    "CFLAGS = -Wall -Wextra -Werror -std=c++17\n\n"
-    "SRC_DIR = src\n"
-    "INC_DIR = include\n"
-    "OBJ_DIR = build\n"
-    "BIN_DIR = bin\n\n"
-    "SRC = $(wildcard $(SRC_DIR)/*.cpp)\n"
-    "OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)\n\n"
-    "all: $(BIN_DIR)/$(NAME)\n\n"
-    "$(BIN_DIR)/$(NAME): $(OBJ)\n"
-    "\t$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $(OBJ)\n\n"
-    "$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp\n"
-    "\t@mkdir -p $(OBJ_DIR)\n"
-    "\t$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@\n\n"
-    "clean:\n"
-    "\trm -f $(OBJ_DIR)\n\n"
-    "fclean: clean\n"
-    "\trm -f $(NAME)\n\n"
-    "re: fclean all\n\n"
-    ".PHONY: all clean fclean re\n";
+      << "\n\n"
+         "CC = g++\n"
+         "CFLAGS = -Wall -Wextra -Werror -std=c++17\n\n"
+         "SRC_DIR = src\n"
+         "INC_DIR = include\n"
+         "OBJ_DIR = build\n"
+         "BIN_DIR = bin\n\n"
+         "SRC = $(wildcard $(SRC_DIR)/*.cpp)\n"
+         "OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)\n\n"
+         "all: $(BIN_DIR)/$(NAME)\n\n"
+         "$(BIN_DIR)/$(NAME): $(OBJ)\n"
+         "\t$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $(OBJ)\n\n"
+         "$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp\n"
+         "\t@mkdir -p $(OBJ_DIR)\n"
+         "\t$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@\n\n"
+         "clean:\n"
+         "\trm -f $(OBJ_DIR)\n\n"
+         "fclean: clean\n"
+         "\trm -f $(NAME)\n\n"
+         "re: fclean all\n\n"
+         ".PHONY: all clean fclean re\n";
 }
 
 /**
@@ -155,10 +159,9 @@ void Initializer::make_git() {
   int result = std::system(cmd.c_str());
   if (result == 0) {
     std::cout << "Initialized git repository in " << this->path << std::endl;
-  }
-  else {
+  } else {
     std::cout << "Error: Failed to initialize git repository in " << this->path
-      << std::endl;
+              << std::endl;
   }
   std::ofstream ofs(this->path + "/.gitignore");
   ofs << "/build\n/bin";
@@ -171,8 +174,10 @@ void Initializer::make_git() {
 void Initializer::manifest() {
   std::ofstream ofs(this->path + "/supra.toml");
   ofs << "[package]\n"
-    "name = \"" << this->path << "\"\n"
-    "version = \"0.1.0\"\n\n"
-    "[tests]\n"
-    "main = \"/tests/try_main.cpp\"";
+         "name = \""
+      << this->path
+      << "\"\n"
+         "version = \"0.1.0\"\n\n"
+         "[tests]\n"
+         "main = \"/tests/try_main.cpp\"";
 }

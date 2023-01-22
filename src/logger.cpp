@@ -13,13 +13,9 @@
 #include "util/logger.hpp"
 
 // Defaults to lowest level of logging
-Logger::Logger() {
-  this->level = INFO;
-}
+Logger::Logger() { this->level = INFO; }
 
-Logger::Logger(LogLevel lvl) {
-  this->level = lvl;
-}
+Logger::Logger(LogLevel lvl) { this->level = lvl; }
 
 void Logger::error(const std::string message) {
   std::string err = "\033[1;31m[ERROR]: " + message + "\033[0m";
@@ -44,8 +40,7 @@ void Logger::info(const std::string message) {
   std::string info = "\033[1;32m[INFO]: " + message + "\033[0m";
   if (this->level <= 0) {
     std::cout << info << std::endl;
-  }
-  else {
+  } else {
     return;
   }
 }

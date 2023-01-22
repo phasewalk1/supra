@@ -6,18 +6,21 @@
 /*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
-/*   Updated: 2023/01/22 15:01:13 by phasewalk1       ###   ########.fr       */
+/*   Updated: 2023/01/22 15:43:32 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "util/parser.hpp"
 #include "util/runner.hpp"
+
+#include "cmd/fmt.hpp"
 #include "cmd/init.hpp"
 #include "cmd/tester.hpp"
+#include "util/logger.hpp"
+#include "util/parser.hpp"
 
+using manif::Manifest;
 using parsing::OPT;
 using parsing::Parser;
-using manif::Manifest;
 using runner::Runner;
 using tester::Tester;
 
@@ -35,6 +38,9 @@ Runner::Runner(std::vector<std::string> argv) {
  */
 void Runner::run(OPT mode) {
   std::string path;
+  Tester tester;
+  std::tuple<Tester, std::map<std::string, bool>> tester_and_results;
+
   switch (mode) {
   // ******* CHECK MODE *******
   case OPT::CHECK:
@@ -47,20 +53,18 @@ void Runner::run(OPT mode) {
     bool force, with_benches;
     if (this->cparser.has_one_flag()) {
       // Check if the --with-benches flag is set
-      if (this->cparser.has_flag("-b") || this->cparser.has_flag("--with-benches")) {
+      if (this->cparser.has_flag("-b") ||
+          this->cparser.has_flag("--with-benches")) {
         with_benches = true;
-      }
-      else {
+      } else {
         with_benches = false;
       }
       if (this->cparser.has_flag("--force")) {
         force = true;
-      }
-      else {
+      } else {
         force = false;
       }
-    }
-    else {
+    } else {
       with_benches = false;
       force = false;
     }
@@ -69,17 +73,22 @@ void Runner::run(OPT mode) {
     break;
   // ******* TEST MODE *******
   case OPT::TEST:
-    std::tuple<Tester, std::map<std::string, bool>> tester_and_results = this->test();
-    Tester tester = std::get<0>(tester_and_results);
+    tester_and_results = this->test();
+    tester = std::get<0>(tester_and_results);
     tester.dump_results(std::get<1>(tester_and_results));
+  case OPT::FMT:
+    fmt::Formatter fmt = fmt::Formatter();
+    fmt.format();
   }
 }
 
 /**
  * @brief Executes the 'new' command
  *
- * @param path(std::string): The path to the directory to create (relative to the current directory
- * @param with_benches(bool): Whether or not to create benchmark directory (default: false)
+ * @param path(std::string): The path to the directory to create (relative to
+ * the current directory
+ * @param with_benches(bool): Whether or not to create benchmark directory
+ * (default: false)
  */
 void Runner::instantiate(std::string path, bool force, bool with_benches) {
   Initializer init = Initializer(path, force);
@@ -94,14 +103,14 @@ void Runner::check() {
   try {
     toml::table cfg = this->mparser->get_config();
     Manifest manif = this->mparser->into_manifest(cfg);
-    std::cout << "Manifest checks out!" << "\n";
-  }
-  catch (std::runtime_error& e) {
+    std::cout << "Manifest checks out!"
+              << "\n";
+  } catch (std::runtime_error &e) {
     std::cout << e.what() << std::endl;
   }
 }
 
-std::tuple<Tester, std::vector<std::string>>Runner::setup_tester() {
+std::tuple<Tester, std::vector<std::string>> Runner::setup_tester() {
   Tester tester = Tester();
   Manifest manif = this->mparser->into_manifest(this->mparser->get_config());
   std::vector<std::string> test_files = tester.get_test_files(manif);
@@ -109,7 +118,8 @@ std::tuple<Tester, std::vector<std::string>>Runner::setup_tester() {
 }
 
 std::tuple<Tester, std::map<std::string, bool>> Runner::test() {
-  std::tuple<Tester, std::vector<std::string>> tester_and_args = this->setup_tester();
+  std::tuple<Tester, std::vector<std::string>> tester_and_args =
+      this->setup_tester();
   Tester tester = std::get<0>(tester_and_args);
   std::vector<std::string> test_files = std::get<1>(tester_and_args);
   std::map<std::string, bool> results = tester.run(test_files);

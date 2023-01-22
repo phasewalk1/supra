@@ -22,7 +22,8 @@ namespace fs = std::filesystem;
 
 /**
  * @brief: In charge of executing the 'new' command
- * @dev: Creates a new project directory, with a manifest file, src/, and tests/, and makefile
+ * @dev: Creates a new project directory, with a manifest file, src/, and
+ * tests/, and makefile
  *
  * @fields:
  *   @private:

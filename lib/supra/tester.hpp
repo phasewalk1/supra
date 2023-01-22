@@ -13,8 +13,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "util/parser.hpp"
 #include "util/logger.hpp"
+#include "util/parser.hpp"
 
 /**
  * @brief The Tester class
@@ -27,33 +27,35 @@
  */
 
 namespace tester {
-  class Tester {
-  public:
-    Tester();
-    Tester(std::string test_dir);
-    virtual void setup();
-    std::map<std::string, bool> run(std::vector<std::string> test_files);
-    virtual std::vector<std::string> get_test_files(manif::Manifest manif);
-    virtual bool run_one(std::string test_path);
-    virtual void dump_results(std::map<std::string, bool> results);
-  protected:
-    std::string TEST_DIR;
-    std::string BUILD_CMD;
-    Logger logger;
+class Tester {
+public:
+  Tester();
+  Tester(std::string test_dir);
+  virtual void setup();
+  std::map<std::string, bool> run(std::vector<std::string> test_files);
+  virtual std::vector<std::string> get_test_files(manif::Manifest manif);
+  virtual bool run_one(std::string test_path);
+  virtual void dump_results(std::map<std::string, bool> results);
 
-    virtual void test_builds();
-    virtual std::string get_build_cmd(const std::string test_path);
-    virtual void build_test(std::string build_cmd);
-    virtual std::string get_invoke_cmd(const std::string test_path);
-    virtual bool invoke_test(std::string invoke_cmd);
-  };
+protected:
+  std::string TEST_DIR;
+  std::string BUILD_CMD;
+  Logger logger;
 
-  class SupraException: public std::exception {
-  public:
-    SupraException(std::string msg) { this->msg = msg; };
-    virtual const char* what() const throw() { return this->msg.c_str(); };
-  private:
-    std::string msg;
-  };
+  virtual void test_builds();
+  virtual std::string get_build_cmd(const std::string test_path);
+  virtual void build_test(std::string build_cmd);
+  virtual std::string get_invoke_cmd(const std::string test_path);
+  virtual bool invoke_test(std::string invoke_cmd);
 };
+
+class SupraException : public std::exception {
+public:
+  SupraException(std::string msg) { this->msg = msg; };
+  virtual const char *what() const throw() { return this->msg.c_str(); };
+
+private:
+  std::string msg;
+};
+};     // namespace tester
 #endif // __TESTER_H__

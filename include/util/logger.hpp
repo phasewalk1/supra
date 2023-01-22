@@ -34,6 +34,7 @@ public:
   virtual void warn(const std::string msg);
   virtual void debug(const std::string msg);
   virtual void info(const std::string msg);
+
 private:
   LogLevel level;
 };
