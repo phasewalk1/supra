@@ -6,10 +6,10 @@
 /*                                                        :::      ::::::::   */
 /*   runner.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
+/*   By: phasewalk1 <github.com/phasewalk1>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 13:00:13 by ethangalluc       #+#    #+#             */
-/*   Updated: 2023/01/21 13:00:15 by ethangalluc      ###   ########.fr       */
+/*   Created: 2023/01/21 13:00:13 by phasewalk1       #+#    #+#             */
+/*   Updated: 2023/01/21 13:00:15 by phasewalk1      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -7,8 +7,6 @@
 #include <stdexcept>
 #include <string>
 
-#define NEW_MIN_ARGC 3
-
 int main(int argc, char** argv) {
   // parse command line arguments
   Parser parser(argc, argv);
