@@ -5,7 +5,9 @@
 `saleen` attempts to incorporate many of the widely loved features from Rusts amazing package manager/development tooling kit, `cargo`. Hence, `saleen` plans on implementing the following features
 
 - [x] `saleen new` - Initializes a new C++ project with `src/`, `tests/`, a "hello world" file in `src/main.cpp`, and a `Makefile` for custom builds. After creating these files and directories, `saleen` instantiates the new workspace as a git repository.
-- [ ] `saleen test` - Runs through the `tests/` directory and executes any test that is defined. Outputting information in a clear and concise manner. Output ceases on failure while pointing to which test failed.
+- [x] `saleen test` - Runs through the `tests/` directory and executes any test that is defined. Outputting information in a clear and concise manner. Output ceases on failure while pointing to which test failed.
+> Still updating `saleen test`
+
 - [ ] `saleen bench` - Executes all benchmarks defined in `benches/`, outputting their results.
 - [ ] `saleen add` - Adds a package to the _saleen manifest_, `saleen.toml`. The _saleen manifest_ is a file that describes your project, its version, dependencies, and dev dependencies (dependencies needed only to compile tests/benches)
 
@@ -31,6 +33,8 @@ This will create a new workspace entitled `my_project` with the following direct
 
 The default Makefile will look like this:
 ```Makefile
+NAME = my_proj
+
 CC = g++
 CFLAGS = -Wall -Wextra -Werror -std=c++17
 
@@ -42,8 +46,6 @@ BIN_DIR = bin
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-NAME = my_project
-
 all: $(BIN_DIR)/$(NAME)
 
 $(BIN_DIR)/$(NAME): $(OBJ)
@@ -54,17 +56,15 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ_DIR)
-
-wipe:
-	rm $(BIN_DIR)/$(NAME)
+	rm -f $(OBJ_DIR)
 
 fclean: clean
-	rm -f $(BIN_DIR)/$(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
 ```
 Thus, build files (`.o`) will be outputted to the `build` directory, while the final executable will be sent to `bin`.
 
@@ -74,5 +74,5 @@ saleen new my_project -b
 ```
 Or,
 ```sh
-saleen new my_project --make-bench
+saleen new my_project --with-benches
 ```
