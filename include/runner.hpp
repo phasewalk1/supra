@@ -15,7 +15,16 @@
 
 #include "parser.hpp"
 
-// brief: Runs `saleen` in the specified mode
+/**
+ * @brief: The main runner class for the 'saleen' program
+ * @dev: Used to run the program in the specified mode
+ *
+ * @fields:
+ *   @protected:
+ *     argc(int): The number of arguments passed to the program
+ *     argv(char**): The arguments passed to the program
+ *     mode(OPT): The mode to run the program in
+ */
 class Runner {
 public:
   Runner(int argc, char** argv, OPT mode);

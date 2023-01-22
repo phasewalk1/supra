@@ -6,10 +6,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
+/*   By: phasewalk1 <github.com/phasewalk1>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 01:57:29 by ethangalluc       #+#    #+#             */
-/*   Updated: 2023/01/21 02:43:24 by ethangalluc      ###   ########.fr       */
+/*   Created: 2023/01/21 01:57:29 by phasewalk1       #+#    #+#             */
+/*   Updated: 2023/01/21 02:43:24 by phasewalk1      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 #include <fstream>
 #include <string>
 
-// brief: Namespace for filsystem library
+// Alias for std::filesystem
 namespace fs = std::filesystem;
 
-// brief: In charge of initializing a new project
-// dev: Creates a new directory, a manifest file, a makefile, and a git
-// repository
+/**
+ * @brief: In charge of executing the 'new' command
+ * @dev: Creates a new project directory, with a manifest file, src/, and tests/, and makefile
+ *
+ * @fields:
+ *   @private:
+ *     path(std::string): The path to the new project directory
+ */
 class Initializer {
 public:
   Initializer(std::string path);

@@ -13,16 +13,19 @@ int main(int argc, char** argv) {
   if (opt == OPT::NEW) {
     if (argc < NEW_MIN_ARGC) {
       throw std::runtime_error("Error: No path given");
-    } else {
+    }
+    else {
       Initializer init = Initializer(std::string(argv[2]));
       bool bench_mode;
       if (argc == NEW_MIN_ARGC) {
         bench_mode = false;
-      } else {
+      }
+      else {
         std::string flag = std::string(argv[3]);
         if (flag == "-b" || flag == "--make-bench") {
           bench_mode = true;
-        } else {
+        }
+        else {
           throw std::runtime_error("Error: Invalid flag");
         }
       }

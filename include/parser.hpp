@@ -19,15 +19,30 @@
 #include <stdexcept>
 #include <vector>
 
-// TODO: Add more options
-// brief: Enumerate options, i.e. modes to run in
+/**
+ * @brief: Options for the 'saleen' runner
+ * @dev: Used to determine the mode to run in
+ * 
+ * @fields:
+ *     NEW: Create a new project, consisting of a manifest file, src/, and
+ *          tests/ directories, and a Makefile
+ *     CHECK: Check the manifest file for errors
+ */
 enum OPT {
   NEW,
   CHECK,
 };
 
-// brief: Package information
-// dev: Use std::optional for optional fields
+/**
+ * @brief: Package metadata information
+ * @dev: Used to serialize the package section of the manifest file
+ *
+ * @fields:
+ *    name(std::string): The name of the package
+ *    version(std::string): The version of the package
+ *    description(std::optional<std::string>): A description of the package
+ *    authors(std::optional<std::vector<std::string>>): A list of authors
+ */
 struct Package {
   std::string name;
   std::string version;
@@ -35,24 +50,40 @@ struct Package {
   std::optional<std::vector<std::string>> authors;
 };
 
-// brief: Dependency information
-// dev: A std::map is used to strongly type the key-value pairs, e.g.
-// ["name"]:["version"]
+/**
+ * @brief: A dependency object for a package in the manifest file
+ * @dev: Contains a std::map of package names to their version requirements
+ *
+ * @fields:
+ *   dep(std::map<std::string, std::string>): A map of package names to their version
+ */
 struct Dependency {
   std::map<std::string, std::string> dep;
   std::string& operator[](const std::string& key) { return dep[key]; }
 };
 
-// brief: Manifest information
-// dev: A manifest is a combination of a package, its metadata, and its
-// dependencies
+/**
+ * @brief: A manifest object for a package
+ * @dev: Serialized from the manifest file
+ *
+ * @fields:
+ *  package(Package): The package section of the manifest file
+ *  deps(std::vector<Dependency>): The deps section of the manifest file
+ */
 struct Manifest {
   Package package;
   std::vector<Dependency> deps;
 };
 
-// brief: In charge of various parsing tasks
-// dev: Used for parsing runner mode, manifest file, and manifest file sections
+/**
+ * @brief: The Parser class
+ * @dev: Used to parse the runner options and manifest file
+ *
+ * @fields:
+ *   @private:
+ *     argc(int): argument count: for the runner
+ *     arg(char**): argument vector: for the runner
+ */
 class Parser {
 public:
   // Constructor
