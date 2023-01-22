@@ -49,6 +49,7 @@ namespace runner {
     virtual void instantiate(std::string path, bool force, bool with_benches);
     virtual void check();
     virtual std::tuple<Tester, std::vector<std::string>> setup_tester();
+    virtual std::tuple<Tester, std::map<std::string, bool>> test();
   };
 } // namespace runner
 

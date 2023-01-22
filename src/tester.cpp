@@ -6,7 +6,7 @@
 /*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:17 by kat               #+#    #+#             */
-/*   Updated: 2023/01/22 13:00:40 by phasewalk1       ###   ########.fr       */
+/*   Updated: 2023/01/22 15:09:51 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ std::map<std::string, bool> Tester::run(std::vector<std::string> test_files) {
   for (std::string file : test_files) {
     std::string path_to_test = "tests/" + file + ".cpp";
     int result = this->run_one(path_to_test);
-    bool pass = result == 0 ? true : false;
+    bool pass = result == true ? true : false;
     results[file] = pass;
   }
 
@@ -101,10 +101,10 @@ void Tester::dump_results(std::map<std::string, bool> results) {
   std::cout << std::string(30, '*') << " TEST RESULTS " << std::string(30, '*') << '\n';
   for (auto const& [file, result] : results) {
     switch (result) {
-    case false:
+    case true:
       this->logger.info("Test passed: " + file + ".cpp");
       break;
-    case true:
+    case false:
       this->logger.error("Test failed: " + file + ".cpp");
       break;
     }
@@ -144,18 +144,19 @@ bool Tester::run_one(std::string test_path) {
     // create the build/tests directory if it doesn't exist
     this->test_builds();
     // build test
-    this->logger.info("Building test:"); std::cout << test_path << "\n";
+    this->logger.debug("Building test:"); std::cout << test_path << "\n";
     this->build_test(BUILD_CMD);
     // run test
-    this->logger.info("running test..."); std::cout << test_path << "\n";
+    this->logger.debug("running test..."); std::cout << test_path << "\n";
     std::string run_cmd = this->get_invoke_cmd(test_path);
     // run test
-    this->invoke_test(run_cmd);
+    bool passing = this->invoke_test(run_cmd);
+    this->show_passing(test_path, passing);
+    return passing;
   }
   else {
     throw std::runtime_error("Error: Test file does not exist");
   }
-  return true;
 }
 
 /**
@@ -190,22 +191,22 @@ void Tester::build_test(std::string build_cmd) {
  * @return (false) if the test exits 1 or any other value
  */
 bool Tester::invoke_test(std::string invoke_cmd) {
-  try {
-    int result = system(invoke_cmd.c_str());
-    switch (result) {
-    case 0:
-      this->logger.info("Test passed");
-      return true;
-    case 1:
-      this->logger.error("Test failed: " + invoke_cmd + " returned 1");
-      return false;
-    default:
-      this->logger.error("Test failed: " + invoke_cmd + " returned " + std::to_string(result));
-      return false;
-    }
+  int result = system(invoke_cmd.c_str());
+  switch (result) {
+  case 0:
+    return true;
+  default:
+    return false;
   }
-  catch (std::exception& e) {
-    this->logger.error("Failed invoking test: " + std::string(e.what()));
+}
+
+void Tester::show_passing(const std::string test_path, bool const passing) {
+  switch (passing) {
+  case true:
+    this->logger.info(test_path + " --> " + "PASS");
+    break;
+  case false:
+    this->logger.error(test_path + " --> " + "FAIL");
+    break;
   }
-  return true;
 }

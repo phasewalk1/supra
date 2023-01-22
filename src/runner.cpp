@@ -6,7 +6,7 @@
 /*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
-/*   Updated: 2023/01/22 13:00:49 by phasewalk1       ###   ########.fr       */
+/*   Updated: 2023/01/22 15:01:13 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,9 @@ void Runner::run(OPT mode) {
     break;
   // ******* TEST MODE *******
   case OPT::TEST:
-    std::tuple<Tester, std::vector<std::string>> tester_and_args = this->setup_tester();
-    Tester tester = std::get<0>(tester_and_args);
-    std::vector<std::string> test_files = std::get<1>(tester_and_args);
-    std::map<std::string, bool> results = tester.run(test_files);
-    tester.dump_results(results);
+    std::tuple<Tester, std::map<std::string, bool>> tester_and_results = this->test();
+    Tester tester = std::get<0>(tester_and_results);
+    tester.dump_results(std::get<1>(tester_and_results));
   }
 }
 
@@ -108,4 +106,12 @@ std::tuple<Tester, std::vector<std::string>>Runner::setup_tester() {
   Manifest manif = this->mparser->into_manifest(this->mparser->get_config());
   std::vector<std::string> test_files = tester.get_test_files(manif);
   return std::make_tuple(tester, test_files);
+}
+
+std::tuple<Tester, std::map<std::string, bool>> Runner::test() {
+  std::tuple<Tester, std::vector<std::string>> tester_and_args = this->setup_tester();
+  Tester tester = std::get<0>(tester_and_args);
+  std::vector<std::string> test_files = std::get<1>(tester_and_args);
+  std::map<std::string, bool> results = tester.run(test_files);
+  return std::make_tuple(tester, results);
 }

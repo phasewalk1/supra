@@ -36,7 +36,6 @@ namespace tester {
     virtual std::vector<std::string> get_test_files(manif::Manifest manif);
     virtual bool run_one(std::string test_path);
     virtual void dump_results(std::map<std::string, bool> results);
-    virtual void show_passing(const std::string test_path, const bool passing);
   protected:
     std::string TEST_DIR;
     std::string BUILD_CMD;
