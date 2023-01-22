@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tester.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
+/*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:17 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 23:49:55 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/22 13:00:40 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
-
 using manif::Manifest;
+using tester::Tester;
 
 /**
  * @brief Construct a new Tester:: Tester object

@@ -25,25 +25,27 @@
  *     TEST_DIR(std::string): The path to the tests/ directory
  *     BUILD_CMD(std::string): The command to build the test files
  */
-class Tester {
-public:
-  Tester();
-  Tester(std::string test_dir);
-  virtual void setup();
-  std::map<std::string, bool> run(std::vector<std::string> test_files);
-  virtual std::vector<std::string> get_test_files(manif::Manifest manif);
-  virtual bool run_one(std::string test_path);
-  virtual void dump_results(std::map<std::string, bool> results);
-protected:
-  std::string TEST_DIR;
-  std::string BUILD_CMD;
-  Logger logger;
 
-  virtual void test_builds();
-  virtual std::string get_build_cmd(const std::string test_path);
-  virtual void build_test(std::string build_cmd);
-  virtual std::string get_invoke_cmd(const std::string test_path);
-  virtual bool invoke_test(std::string invoke_cmd);
-};
+namespace tester {
+  class Tester {
+  public:
+    Tester();
+    Tester(std::string test_dir);
+    virtual void setup();
+    std::map<std::string, bool> run(std::vector<std::string> test_files);
+    virtual std::vector<std::string> get_test_files(manif::Manifest manif);
+    virtual bool run_one(std::string test_path);
+    virtual void dump_results(std::map<std::string, bool> results);
+  protected:
+    std::string TEST_DIR;
+    std::string BUILD_CMD;
+    Logger logger;
 
+    virtual void test_builds();
+    virtual std::string get_build_cmd(const std::string test_path);
+    virtual void build_test(std::string build_cmd);
+    virtual std::string get_invoke_cmd(const std::string test_path);
+    virtual bool invoke_test(std::string invoke_cmd);
+  };
+}
 #endif // __TESTER_H__

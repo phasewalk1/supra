@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runner.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
+/*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 23:56:25 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/22 13:00:49 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@
 
 using parsing::OPT;
 using parsing::Parser;
-
 using manif::Manifest;
-
 using runner::Runner;
+using tester::Tester;
 
 #define NEW_PATH_ARG_IDX 2
 #define NEW_FLAG_ARG_IDX 3

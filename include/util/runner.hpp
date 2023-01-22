@@ -19,8 +19,8 @@
 
 using parsing::OPT;
 using parsing::Parser;
-
 using manif::ManifParser;
+using tester::Tester;
 
 namespace runner {
 /**
