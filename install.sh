@@ -1,0 +1,1 @@
+make && sudo cp bin/saleen /usr/local/bin/saleen
