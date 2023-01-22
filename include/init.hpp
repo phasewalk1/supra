@@ -31,7 +31,7 @@ namespace fs = std::filesystem;
 class Initializer {
 public:
   Initializer(std::string path, bool force);
-  void spinup(bool bench_mode);
+  virtual void spinup(bool bench_mode);
 
 private:
   std::string path;

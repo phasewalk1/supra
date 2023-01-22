@@ -6,7 +6,7 @@
 /*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:17 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:06:09 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:14:51 by kat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void Tester::setup() {
 }
 
 /**
+ * @visibility PROTECTED 
  * @brief Gets the build command for a single test
  * @param test_path(std::string): The path to the test file
  * @return (std::string): The build command for the test
@@ -58,6 +59,7 @@ std::string Tester::get_build_cmd(const std::string test_path) {
 }
 
 /**
+ * @visibility PROTECTED
  * @brief Gets the run command for a single test
  * @param test_path(std::string): The path to the test file
  * @return (std::string): The run command for the test
@@ -155,6 +157,7 @@ bool Tester::run_one(std::string test_path) {
 }
 
 /**
+ * @visibility PROTECTED
  * @brief Creates the build/tests directory if it doesn't exist
  */
 void Tester::test_builds() {
@@ -164,6 +167,7 @@ void Tester::test_builds() {
 }
 
 /**
+ * @visibility PROTECTED
  * @brief Builds a test
  *
  * @param build_cmd(std::string): The build command for the test
@@ -176,6 +180,7 @@ void Tester::build_test(std::string build_cmd) {
 }
 
 /**
+ * @visibility PROTECTED
  * @brief Invokes a test
  *
  * @param invoke_cmd(std::string): The invoke command for the test

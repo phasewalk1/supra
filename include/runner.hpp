@@ -37,9 +37,9 @@ private:
   std::vector<std::string> args;
   size_t argc;
 
-  void instantiate(std::string path, bool force, bool with_benches);
-  void check();
-  std::tuple<Tester, std::vector<std::string>> setup_tester();
+  virtual void instantiate(std::string path, bool force, bool with_benches);
+  virtual void check();
+  virtual std::tuple<Tester, std::vector<std::string>> setup_tester();
 };
 
 #endif // __RUNNER_H__

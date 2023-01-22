@@ -30,13 +30,12 @@ class Logger {
 public:
   Logger();
   Logger(LogLevel lvl);
-  void error(const std::string msg);
-  void warn(const std::string msg);
-  void debug(const std::string msg);
-  void info(const std::string msg);
+  virtual void error(const std::string msg);
+  virtual void warn(const std::string msg);
+  virtual void debug(const std::string msg);
+  virtual void info(const std::string msg);
 private:
   LogLevel level;
 };
-
 
 #endif // __LOGGER_H__

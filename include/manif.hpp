@@ -55,4 +55,5 @@ struct Manifest {
   std::vector<Dependency> deps;
   std::map<std::string, std::string> tests;
 };
+
 #endif // __MANIF_H__
