@@ -6,7 +6,7 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:24 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:46:06 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 21:49:20 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ bool Parser::has_flag(const std::string flag) {
 toml::table Parser::get_config() {
   toml::table cfg;
   try {
-    cfg = toml::parse_file("saleen.toml");
+    cfg = toml::parse_file("supra.toml");
   }
   catch (const toml::parse_error& err) {
     std::cerr << err.what() << '\n';

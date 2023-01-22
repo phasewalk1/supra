@@ -11,7 +11,7 @@ INCLUDE_DIRS = -I $(INC_DIR) -I /usr/local/include
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-NAME = saleen
+NAME = supra
 
 all: $(BIN_DIR)/$(NAME)
 

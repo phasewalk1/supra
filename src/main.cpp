@@ -6,7 +6,7 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:29 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:45:46 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 21:49:40 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
  * @param p(Parser&): The parser
  * @param args(std::vector<std::string>): The arguments
  */
-void saleen(Parser& p, std::vector<std::string> args) {
+void supra(Parser& p, std::vector<std::string> args) {
   // build a runner over the arguments
   Runner r(args);
   // parse the mode
@@ -39,7 +39,7 @@ void saleen(Parser& p, std::vector<std::string> args) {
     try {
       r.run(mode);
     }
-    // catch saleen runtime err
+    // catch supra runtime err
     catch (std::runtime_error& e) {
       std::cout << e.what() << std::endl;
     }
@@ -55,6 +55,6 @@ int main(int argc, char** argv) {
   Parser parser(argc, argv);
   std::vector<std::string> args = parser.get_argv();
 
-  // run saleen
-  saleen(parser, args);
+  // run supra
+  supra(parser, args);
 }

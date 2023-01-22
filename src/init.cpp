@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:38 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:08:49 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:49:26 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void Initializer::make_git() {
  * @brief: Creates a manifest file in the project directory
  */
 void Initializer::manifest() {
-  std::ofstream ofs(this->path + "/saleen.toml");
+  std::ofstream ofs(this->path + "/supra.toml");
   ofs << "[package]\n"
     "name = \"" << this->path << "\"\n"
     "version = \"0.1.0\"\n\n"
