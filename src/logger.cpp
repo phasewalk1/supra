@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   logger.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:33 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 19:40:35 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:54:55 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "logger.hpp"
+#include "util/logger.hpp"
 
 // Defaults to lowest level of logging
 Logger::Logger() {

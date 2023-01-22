@@ -13,8 +13,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.hpp"
-#include "tester.hpp"
+#include "util/parser.hpp"
+#include "cmd/tester.hpp"
 
 /**
  * @brief: The main runner class for the 'saleen' program

@@ -13,8 +13,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "toml.hpp"
-#include "manif.hpp"
+#include "extern/toml.hpp"
+#include "util/manif.hpp"
 
 #include <cstring>
 #include <iostream>

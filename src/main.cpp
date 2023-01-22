@@ -6,14 +6,14 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:29 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:49:40 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 21:55:18 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.hpp"
-#include "parser.hpp"
-#include "runner.hpp"
-#include "logger.hpp"
+#include "cmd/init.hpp"
+#include "util/parser.hpp"
+#include "util/runner.hpp"
+#include "util/logger.hpp"
 
 #include <iostream>
 #include <stdexcept>

@@ -6,12 +6,12 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:24 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:49:20 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 21:55:26 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.hpp"
-#include "runner.hpp"
+#include "util/parser.hpp"
+#include "util/runner.hpp"
 
 #include <cstring>
 

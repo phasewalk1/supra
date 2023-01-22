@@ -6,11 +6,11 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:38 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:49:26 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 21:54:49 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.hpp"
+#include "cmd/init.hpp"
 
 #include <cstdlib>
 #include <filesystem>

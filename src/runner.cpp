@@ -6,14 +6,14 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:47:31 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 21:55:40 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.hpp"
-#include "runner.hpp"
-#include "init.hpp"
-#include "tester.hpp"
+#include "util/parser.hpp"
+#include "util/runner.hpp"
+#include "cmd/init.hpp"
+#include "cmd/tester.hpp"
 
 #define NEW_PATH_ARG_IDX 2
 #define NEW_FLAG_ARG_IDX 3

@@ -13,8 +13,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.hpp"
-#include "logger.hpp"
+#include "util/parser.hpp"
+#include "util/logger.hpp"
 
 /**
  * @brief The Tester class

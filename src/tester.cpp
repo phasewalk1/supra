@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tester.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:17 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:14:51 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:55:46 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tester.hpp"
+#include "cmd/tester.hpp"
 #include <filesystem>
 
 namespace fs = std::filesystem;
