@@ -6,7 +6,7 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:55:40 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 23:56:25 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 #include "cmd/init.hpp"
 #include "cmd/tester.hpp"
 
+using parsing::OPT;
+using parsing::Parser;
+
+using manif::Manifest;
+
+using runner::Runner;
+
 #define NEW_PATH_ARG_IDX 2
 #define NEW_FLAG_ARG_IDX 3
 
 Runner::Runner(std::vector<std::string> argv) {
   this->argc = argv.size();
   this->args = argv;
-}
-
-/**
- * @brief Set the parser instance to use for this runner
- *
- * @param parser(Parser): The parser instance to use
- */
-void Runner::set_parser(Parser parser) {
-  this->parser = parser;
 }
 
 /**
@@ -48,15 +46,15 @@ void Runner::run(OPT mode) {
     // Get the path to the new project
     path = this->args[NEW_PATH_ARG_IDX];
     bool force, with_benches;
-    if (this->parser.has_one_flag()) {
+    if (this->cparser.has_one_flag()) {
       // Check if the --with-benches flag is set
-      if (this->parser.has_flag("-b") || this->parser.has_flag("--with-benches")) {
+      if (this->cparser.has_flag("-b") || this->cparser.has_flag("--with-benches")) {
         with_benches = true;
       }
       else {
         with_benches = false;
       }
-      if (this->parser.has_flag("--force")) {
+      if (this->cparser.has_flag("--force")) {
         force = true;
       }
       else {
@@ -97,8 +95,8 @@ void Runner::instantiate(std::string path, bool force, bool with_benches) {
  */
 void Runner::check() {
   try {
-    toml::table cfg = this->parser.get_config();
-    Manifest manif = this->parser.to_manifest(cfg);
+    toml::table cfg = this->mparser->get_config();
+    Manifest manif = this->mparser->into_manifest(cfg);
     std::cout << "Manifest checks out!" << "\n";
   }
   catch (std::runtime_error& e) {
@@ -108,7 +106,7 @@ void Runner::check() {
 
 std::tuple<Tester, std::vector<std::string>>Runner::setup_tester() {
   Tester tester = Tester();
-  Manifest manif = this->parser.to_manifest(this->parser.get_config());
+  Manifest manif = this->mparser->into_manifest(this->mparser->get_config());
   std::vector<std::string> test_files = tester.get_test_files(manif);
   return std::make_tuple(tester, test_files);
 }

@@ -31,7 +31,7 @@ public:
   Tester(std::string test_dir);
   virtual void setup();
   std::map<std::string, bool> run(std::vector<std::string> test_files);
-  virtual std::vector<std::string> get_test_files(Manifest manif);
+  virtual std::vector<std::string> get_test_files(manif::Manifest manif);
   virtual bool run_one(std::string test_path);
   virtual void dump_results(std::map<std::string, bool> results);
 protected:

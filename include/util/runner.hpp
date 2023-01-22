@@ -14,8 +14,15 @@
 /* ************************************************************************** */
 
 #include "util/parser.hpp"
+#include "util/manif.hpp"
 #include "cmd/tester.hpp"
 
+using parsing::OPT;
+using parsing::Parser;
+
+using manif::ManifParser;
+
+namespace runner {
 /**
  * @brief: The main runner class for the 'saleen' program
  * @dev: Used to run the program in the specified mode
@@ -26,20 +33,23 @@
  *     argv(char**): The arguments passed to the program
  *     mode(OPT): The mode to run the program in
  */
-class Runner {
-public:
-  Runner(std::vector<std::string> args);
-  void set_parser(Parser parser);
-  virtual void run(OPT mode);
+  class Runner {
+  public:
+    Runner(std::vector<std::string> args);
+    inline void set_parser(const Parser parser) { this->cparser = parser; };
+    inline void set_manif_parser(const ManifParser parser) { this->mparser = parser; }
+    virtual void run(OPT mode);
 
-private:
-  Parser parser;
-  std::vector<std::string> args;
-  size_t argc;
+  private:
+    Parser cparser;
+    std::optional<ManifParser> mparser;
+    std::vector<std::string> args;
+    size_t argc;
 
-  virtual void instantiate(std::string path, bool force, bool with_benches);
-  virtual void check();
-  virtual std::tuple<Tester, std::vector<std::string>> setup_tester();
-};
+    virtual void instantiate(std::string path, bool force, bool with_benches);
+    virtual void check();
+    virtual std::tuple<Tester, std::vector<std::string>> setup_tester();
+  };
+} // namespace runner
 
 #endif // __RUNNER_H__

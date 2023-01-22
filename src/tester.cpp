@@ -6,7 +6,7 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:17 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:55:46 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 23:49:55 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
+
+using manif::Manifest;
 
 /**
  * @brief Construct a new Tester:: Tester object
@@ -47,7 +49,7 @@ void Tester::setup() {
 }
 
 /**
- * @visibility PROTECTED 
+ * @visibility PROTECTED
  * @brief Gets the build command for a single test
  * @param test_path(std::string): The path to the test file
  * @return (std::string): The build command for the test
@@ -85,7 +87,7 @@ std::map<std::string, bool> Tester::run(std::vector<std::string> test_files) {
     bool pass = result == 0 ? true : false;
     results[file] = pass;
   }
-  
+
   return results;
 }
 
@@ -99,12 +101,12 @@ void Tester::dump_results(std::map<std::string, bool> results) {
   std::cout << std::string(30, '*') << " TEST RESULTS " << std::string(30, '*') << '\n';
   for (auto const& [file, result] : results) {
     switch (result) {
-      case false:
-        this->logger.info("Test passed: " + file + ".cpp");
-        break;
-      case true:
-        this->logger.error("Test failed: " + file + ".cpp");
-        break;
+    case false:
+      this->logger.info("Test passed: " + file + ".cpp");
+      break;
+    case true:
+      this->logger.error("Test failed: " + file + ".cpp");
+      break;
     }
   }
 }
@@ -161,7 +163,7 @@ bool Tester::run_one(std::string test_path) {
  * @brief Creates the build/tests directory if it doesn't exist
  */
 void Tester::test_builds() {
-  if(!fs::exists("build/tests")) {
+  if (!fs::exists("build/tests")) {
     fs::create_directory("build/tests");
   }
 }
@@ -188,18 +190,18 @@ void Tester::build_test(std::string build_cmd) {
  * @return (false) if the test exits 1 or any other value
  */
 bool Tester::invoke_test(std::string invoke_cmd) {
-  try { 
+  try {
     int result = system(invoke_cmd.c_str());
     switch (result) {
-      case 0:
-        this->logger.info("Test passed");
-        return true;
-      case 1:
-        this->logger.error("Test failed: " + invoke_cmd + " returned 1");
-        return false;
-      default:
-        this->logger.error("Test failed: " + invoke_cmd + " returned " + std::to_string(result));
-        return false;
+    case 0:
+      this->logger.info("Test passed");
+      return true;
+    case 1:
+      this->logger.error("Test failed: " + invoke_cmd + " returned 1");
+      return false;
+    default:
+      this->logger.error("Test failed: " + invoke_cmd + " returned " + std::to_string(result));
+      return false;
     }
   }
   catch (std::exception& e) {
