@@ -1,6 +1,7 @@
 #include "init.hpp"
 #include "parser.hpp"
 #include "runner.hpp"
+#include "logger.hpp"
 
 #include <iostream>
 #include <stdexcept>

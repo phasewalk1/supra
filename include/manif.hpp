@@ -1,3 +1,18 @@
+#ifndef __MANIF_H__
+#define __MANIF_H__
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manif.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: phasewalk1 <github.com/phasewalk1    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/21 18:53:34 by phasewalk1       #+#    #+#             */
+/*   Updated: 2023/01/21 18:53:35 by phasewalk1      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @brief: Package metadata information
  * @dev: Used to serialize the package section of the manifest file
@@ -40,3 +55,4 @@ struct Manifest {
   std::vector<Dependency> deps;
   std::map<std::string, std::string> tests;
 };
+#endif // __MANIF_H__

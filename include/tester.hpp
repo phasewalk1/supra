@@ -14,6 +14,7 @@
 /* ************************************************************************** */
 
 #include "parser.hpp"
+#include "logger.hpp"
 
 /**
  * @brief The Tester class
@@ -34,6 +35,8 @@ public:
 protected:
   std::string TEST_DIR;
   std::string BUILD_CMD;
+
+  Logger logger;
 };
 
 #endif // __TESTER_H__

@@ -1,5 +1,4 @@
 #include "tester.hpp"
-#include "parser.hpp"
 #include <filesystem>
 
 namespace fs = std::filesystem;
@@ -11,6 +10,7 @@ namespace fs = std::filesystem;
 Tester::Tester() {
   this->TEST_DIR = std::string("tests");
   this->BUILD_CMD = std::string("g++ -std=c++17 -o");
+  this->logger = Logger();
 }
 
 /**
@@ -22,6 +22,7 @@ Tester::Tester() {
 Tester::Tester(std::string test_dir) {
   this->TEST_DIR = test_dir;
   this->BUILD_CMD = std::string("g++ -std=c++17 -o");
+  this->logger = Logger();
 }
 
 /**
@@ -48,6 +49,7 @@ std::vector<std::string> Tester::get_test_files(Manifest manif) {
   // return vector of test files
   std::vector<std::string> test_files;
 
+  this->logger.debug("Getting test files from manifest...");
   // iterate through manif.tests map and extract key-values
   for (auto it = manif.tests.begin(); it != manif.tests.end(); it++) {
     test_files.push_back(it->first);
@@ -75,7 +77,7 @@ bool Tester::run_test(std::string test_path) {
     if (!fs::exists(build_path)) {
       fs::create_directory("build/tests");
     }
-    std::cout << "building test...\n";
+    this->logger.info("Building test:"); std::cout << test_path << "\n";
 
     // build test
     try { system(build_cmd.c_str()); }
@@ -84,7 +86,7 @@ bool Tester::run_test(std::string test_path) {
       return false;
     }
 
-    std::cout << "running test...\n";
+    this->logger.info("running test..."); std::cout << test_path << "\n";
     std::string run_cmd = "build/" + test_path + ".out";
 
     // run test

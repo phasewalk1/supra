@@ -56,16 +56,11 @@ void Runner::run() {
       this->instantiate(path, with_benches);
       break;
     case OPT::TEST:
-      std::cout << "initializing tester...\n";
       Tester tester = Tester();
-      std::cout << "getting config...\n";
       Manifest manif = this->parser.to_manifest(this->parser.get_config());
-      std::cout << "getting test files...\n";
       std::vector<std::string> test_files = tester.get_test_files(manif);
-      std::cout << "got " << test_files.size() << " test file(s)\n";
       for (std::string file : test_files) {
         std::string path_to_test = "tests/" + file + ".cpp";
-        std::cout << "running test file: " << path_to_test << "\n";
         tester.run_test(path_to_test);
       }
     }
