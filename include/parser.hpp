@@ -14,6 +14,7 @@
 /* ************************************************************************** */
 
 #include "toml.hpp"
+
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
@@ -22,7 +23,7 @@
 /**
  * @brief: Options for the 'saleen' runner
  * @dev: Used to determine the mode to run in
- * 
+ *
  * @fields:
  *     NEW: Create a new project, consisting of a manifest file, src/, and
  *          tests/ directories, and a Makefile
@@ -87,9 +88,14 @@ struct Manifest {
 class Parser {
 public:
   // Constructor
+  Parser();
   Parser(int argc, char** argv);
+  // Convert argv to std::vector
+  std::vector<std::string> collect_argv(char** argv);
   // Parse the mode to run in
   OPT parse();
+  // Ensure arg count is valid for the mode
+  bool valid_argc();
   // Parse the manifest into a toml::table
   toml::table get_config();
   // Parse the toml::table into a Manifest struct
@@ -97,11 +103,17 @@ public:
   // Debug pring the listed dependencies within saleen.toml
   inline void debug_deps(std::vector<Dependency> deps);
 
+  // Getters
+  inline int get_argc() { return this->argc; }
+  inline std::vector<std::string> get_argv() { return this->argv; }
+
 private:
   // argument count: for the runner
   int argc;
   // argument vector: for the runner
-  char** argv;
+  std::vector<std::string> argv;
+  // Mode that was parsed from 'parse()'
+  OPT opt;
 
   // Parse the package section of the manifest file
   // dev: called by `to_manifest()`

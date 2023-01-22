@@ -37,7 +37,7 @@ void Initializer::init_dir(bool bench_mode) {
       fs::create_directory(bin_path);
 
       if (bench_mode) {
-        std::string bench_path = this->path + "/bench";
+        std::string bench_path = this->path + "/benches";
         fs::create_directory(bench_path);
       }
 

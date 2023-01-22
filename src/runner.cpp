@@ -1,20 +1,22 @@
+#include "parser.hpp"
 #include "runner.hpp"
 #include "init.hpp"
-#include "parser.hpp"
 
-#define NEW_MIN_ARGC 3
+#define NEW_PATH_ARG_IDX 2
+#define NEW_FLAG_ARG_IDX 3
+
+Runner::Runner(std::vector<std::string> args) {
+  this->argc = args.size();
+  this->args = args;
+}
 
 /**
- * @brief Construct a new Runner:: Runner object
+ * @brief Set the parser instance to use for this runner
  *
- * @param argc(int): The number of arguments passed to the program
- * @param argv(char**): The arguments passed to the program
- * @param mode(OPT): The mode to run the program in
+ * @param parser(Parser): The parser instance to use
  */
-Runner::Runner(int argc, char** argv, OPT mode) {
-  this->argc = argc;
-  this->argv = argv;
-  this->mode = mode;
+void Runner::set_parser(Parser parser) {
+  this->parser = parser;
 }
 
 /**
@@ -24,33 +26,59 @@ Runner::Runner(int argc, char** argv, OPT mode) {
  * TODO: Make this more readable
  */
 void Runner::run() {
-  switch (this->mode) {
-  case OPT::NEW:
-    if (this->argc < NEW_MIN_ARGC) {
-      throw std::runtime_error("Error: No path given");
-    }
-    else {
-      Initializer init = Initializer(std::string(this->argv[2]));
-      bool bench_mode;
-      if (this->argc == NEW_MIN_ARGC) {
-        bench_mode = false;
-      }
-      else {
-        std::string flag = std::string(this->argv[3]);
-        if (flag == "-b" || flag == "--make-bench") {
-          bench_mode = true;
+  // Determine the mode to run the program in
+  OPT mode = this->parser.parse();
+  // Check if the arguments are valid
+  if (!(this->parser.valid_argc())) {
+    throw std::runtime_error("Error: Invalid arguments");
+  }
+  else {
+    switch (mode) {
+    case OPT::CHECK:
+      this->check();
+      break;
+    case OPT::NEW:
+      std::string path = this->args[NEW_PATH_ARG_IDX];
+      bool with_benches;
+      if (this->argc == 4) {
+        if (this->args[NEW_FLAG_ARG_IDX] == "-b" || this->args[NEW_FLAG_ARG_IDX] == "--with-benches") {
+          with_benches = true;
         }
         else {
           throw std::runtime_error("Error: Invalid flag");
         }
       }
-      init.init_dir(bench_mode);
+      else {
+        with_benches = false;
+      }
+      this->instantiate(path, with_benches);
+      break;
     }
-  case OPT::CHECK:
-    Parser parser = Parser(this->argc, this->argv);
-    toml::table cfg = parser.get_config();
-    Manifest manifest = parser.to_manifest(cfg);
+  }
+}
 
-    return;
+/**
+ * @brief Executes the 'new' command
+ *
+ * @param path(std::string): The path to the directory to create (relative to the current directory
+ * @param with_benches(bool): Whether or not to create benchmark directory (default: false)
+ */
+void Runner::instantiate(std::string path, bool with_benches) {
+  Initializer init = Initializer(path);
+  init.init_dir(with_benches);
+}
+
+/**
+ * @brief Checks validity of the saleen.toml manifest file
+ *
+ */
+void Runner::check() {
+  try {
+    toml::table cfg = this->parser.get_config();
+    Manifest manif = this->parser.to_manifest(cfg);
+    std::cout << "Manifest checks out!" << "\n";
+  }
+  catch (std::runtime_error& e) {
+    std::cout << e.what() << std::endl;
   }
 }

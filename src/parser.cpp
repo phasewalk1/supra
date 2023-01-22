@@ -1,4 +1,12 @@
 #include "parser.hpp"
+#include "runner.hpp"
+
+#include <cstring>
+
+Parser::Parser() {
+  this->argc = 0;
+  this->argv = {};
+}
 
 /**
  * @brief Construct a new Parser:: Parser object
@@ -8,7 +16,20 @@
  */
 Parser::Parser(int argc, char** argv) {
   this->argc = argc;
-  this->argv = argv;
+  this->argv = this->collect_argv(argv);
+}
+
+/**
+ * @brief Collects the argv array into a vector
+ *
+ * @return std::vector<std::string>
+ */
+std::vector<std::string> Parser::collect_argv(char** argv) {
+  std::vector<std::string> vec;
+  for (int i = 0; i < this->argc; i++) {
+    vec.push_back(argv[i]);
+  }
+  return vec;
 }
 
 /**
@@ -22,15 +43,26 @@ OPT Parser::parse() {
     throw std::runtime_error("Error: No arguments given");
   }
   else {
-    if (strcmp(argv[1], "new") == 0) {
+    if (argv[1] == "new") {
+      this->opt = OPT::NEW;
       return NEW;
     }
-    else if (strcmp(argv[1], "check") == 0) {
+    else if (argv[1] == "check") {
+      this->opt = OPT::CHECK;
       return CHECK;
     }
     else {
       throw std::runtime_error("Error: Invalid argument");
     }
+  }
+}
+
+bool Parser::valid_argc() {
+  switch (this->opt) {
+  case OPT::NEW:
+    return this->argc >= 3;
+  case OPT::CHECK:
+    return this->argc == 2;
   }
 }
 
