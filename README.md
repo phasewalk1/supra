@@ -5,6 +5,7 @@
 `supra` attempts to incorporate many of the widely loved features from Rusts amazing package manager/development tooling kit, `cargo`. Hence, `supra` plans on implementing the following features
 
 - [x] `supra new` - Initializes a new C++ project with `src/`, `tests/`, a "hello world" file in `src/main.cpp`, and a `Makefile` for custom builds. After creating these files and directories, `supra` instantiates the new workspace as a git repository.
+- [x] `supra fmt` - Using `clang-format --style=LLVM`, recursively formats an entire C++ workspace.
 - [x] `supra test` - Runs through the `tests/` directory and executes any test that is defined. Outputting information in a clear and concise manner. Output ceases on failure while pointing to which test failed.
 > Still updating `supra test`
 
