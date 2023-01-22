@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runner.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:08:02 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:47:31 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,19 @@ void Runner::run(OPT mode) {
       if (this->parser.has_flag("-b") || this->parser.has_flag("--with-benches")) {
         with_benches = true;
       }
+      else {
+        with_benches = false;
+      }
       if (this->parser.has_flag("--force")) {
         force = true;
+      }
+      else {
+        force = false;
       }
     }
     else {
       with_benches = false;
+      force = false;
     }
     // Create the new project
     this->instantiate(path, force, with_benches);

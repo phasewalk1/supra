@@ -16,6 +16,7 @@ NAME = saleen
 all: $(BIN_DIR)/$(NAME)
 
 $(BIN_DIR)/$(NAME): $(OBJ)
+	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $(OBJ)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
@@ -24,6 +25,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 clean:
 	rm -rf $(OBJ_DIR)
+	rm -rf $(BIN_DIR)
 
 wipe:
 	rm $(BIN_DIR)/$(NAME)

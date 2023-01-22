@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:29 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:09:06 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:45:46 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.hpp"`
+#include "init.hpp"
 #include "parser.hpp"
 #include "runner.hpp"
 #include "logger.hpp"
@@ -22,7 +22,7 @@
 /**
  * @brief Runs the program
  * @dev Throws an error if the number of arguments is invalid
- * 
+ *
  * @param p(Parser&): The parser
  * @param args(std::vector<std::string>): The arguments
  */
@@ -44,7 +44,8 @@ void saleen(Parser& p, std::vector<std::string> args) {
       std::cout << e.what() << std::endl;
     }
     // args invalid!
-  } else {
+  }
+  else {
     throw std::invalid_argument("Error: Invalid number of arguments");
   }
 }
@@ -53,7 +54,7 @@ int main(int argc, char** argv) {
   // parse command line arguments
   Parser parser(argc, argv);
   std::vector<std::string> args = parser.get_argv();
-  
+
   // run saleen
   saleen(parser, args);
 }

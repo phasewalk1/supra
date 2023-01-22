@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:24 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:07:44 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:46:06 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ bool Parser::has_flag(const std::string flag) {
       return true;
     }
   }
+  return false;
 }
 
 /**
