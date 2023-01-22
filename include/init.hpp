@@ -30,13 +30,18 @@ namespace fs = std::filesystem;
  */
 class Initializer {
 public:
-  Initializer(std::string path);
-  void init_dir(bool bench_mode);
-  void makefile();
-  void make_git();
+  Initializer(std::string path, bool force);
+  void spinup(bool bench_mode);
 
 private:
   std::string path;
+
+  void build_dir(bool with_benches);
+  void hello_world();
+  void test_hello_world();
+  void makefile();
+  void make_git();
+  void manifest();
 };
 
 #endif // __INIT_H__

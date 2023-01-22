@@ -14,6 +14,7 @@
 /* ************************************************************************** */
 
 #include "parser.hpp"
+#include "tester.hpp"
 
 /**
  * @brief: The main runner class for the 'saleen' program
@@ -29,15 +30,16 @@ class Runner {
 public:
   Runner(std::vector<std::string> args);
   void set_parser(Parser parser);
-  virtual void run();
+  virtual void run(OPT mode);
 
 private:
   Parser parser;
   std::vector<std::string> args;
   size_t argc;
 
-  void instantiate(std::string path, bool with_benches);
+  void instantiate(std::string path, bool force, bool with_benches);
   void check();
+  std::tuple<Tester, std::vector<std::string>> setup_tester();
 };
 
 #endif // __RUNNER_H__

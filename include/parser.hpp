@@ -54,9 +54,13 @@ public:
   // Convert argv to std::vector
   std::vector<std::string> collect_argv(char** argv);
   // Parse the mode to run in
-  OPT parse();
+  OPT mode();
   // Ensure arg count is valid for the mode
-  bool valid_argc();
+  bool ok();
+  // Check if the args contain at least one flag
+  bool has_one_flag();
+  // Check if the args contain a specific flag
+  bool has_flag(const std::string flag);
   // Parse the manifest into a toml::table
   toml::table get_config();
   // Parse the toml::table into a Manifest struct

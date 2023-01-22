@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/21 19:40:38 by kat               #+#    #+#             */
+/*   Updated: 2023/01/21 20:28:36 by kat              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "init.hpp"
 
 #include <cstdlib>
@@ -7,61 +19,95 @@
 #include <stdexcept>
 #include <string>
 
-Initializer::Initializer(std::string path) { this->path = path; }
+/**
+ * @brief Construct a new Init:: Initializer object
+ * @dev Throws an error if the directory exists and is not empty
+ */
+Initializer::Initializer(std::string path, bool force) { 
+  if (fs::exists(path) && !(fs::is_empty(path)) && !(force)) {
+    std::string err = "Error: Directory already exists and is not empty. Rerun with 'saleen new " + path + " --force' to overwrite.";
+    throw std::runtime_error(err);
+  }
+  else {
+    this->path = path;
+  } 
+}
 
 /**
  * @brief: Creates a new project directory and its subdirectories
- * @dev: If this->path already exists, throws an error
  * 
  * @param bench_mode(bool): Whether or not to create a bench/ directory
  */
-void Initializer::init_dir(bool bench_mode) {
-  if (fs::exists(this->path) && !(fs::is_empty(this->path))) {
-    throw std::runtime_error("Error: Directory already exists");
+void Initializer::spinup(bool bench_mode) {
+  try {
+    // create top level directory
+    fs::create_directory(this->path);
+    // create directories
+    this->build_dir(bench_mode);
+    // populate src/
+    this->hello_world();
+    // populate tests/
+    this->test_hello_world();
+    // create Makefile
+    this->makefile();
+    // create git repo
+    this->make_git();
+    // create manifest
+    this->manifest();
+    std::cout << "Created directory " << this->path << std::endl;
   }
-  else {
-    try {
-      // create top level directory
-      fs::create_directory(this->path);
-
-      // create directories
-      std::string src_path = this->path + "/src";
-      std::string tests_path = this->path + "/tests";
-      std::string incl_path = this->path + "/include";
-      std::string build_path = this->path + "/build";
-      std::string bin_path = this->path + "/bin";
-      fs::create_directory(src_path);
-      fs::create_directory(tests_path);
-      fs::create_directory(incl_path);
-      fs::create_directory(build_path);
-      fs::create_directory(bin_path);
-
-      if (bench_mode) {
-        std::string bench_path = this->path + "/benches";
-        fs::create_directory(bench_path);
-      }
-
-      // create src file
-      std::string src_file_path = src_path + "/main.cpp";
-      std::ofstream ofs(src_file_path);
-      ofs << "#include <iostream>\n\nint main() {\n  "
-        "std::cout << \"Hello World\" << std::endl;\n  return 0;\n}\n";
-      ofs.close();
-
-      // create Makefile
-      this->makefile();
-
-      // create git repo
-      this->make_git();
-
-      std::cout << "Created directory " << this->path << std::endl;
-    }
-    catch (const fs::filesystem_error& e) {
-      std::cout << e.what() << std::endl;
-    }
+  catch (const fs::filesystem_error& e) {
+    std::cout << e.what() << std::endl;
   }
 
   return;
+}
+
+/**
+ * @brief: Creates necessary subdirectories
+ * @dev: This is ran after the top level directory is created, within the spinup() function
+ */
+void Initializer::build_dir(bool with_benches) {
+  fs::create_directory(this->path + "/src");
+  fs::create_directory(this->path + "/tests");
+  fs::create_directory(this->path + "/include");
+  fs::create_directory(this->path + "/build");
+  fs::create_directory(this->path + "/bin");
+  if (with_benches) {
+    fs::create_directory(this->path + "/benches");
+  }
+}
+
+void Initializer::hello_world() {
+  // create src file
+  std::string src_file_path = this->path + "/src" + "/main.cpp";
+  std::ofstream ofs(src_file_path);
+  ofs << "#include <iostream>\n\nint main() {\n  "
+    "std::cout << \"Hello World\" << std::endl;\n  return 0;\n}\n";
+  ofs.close();
+}
+
+void Initializer::test_hello_world() {
+  std::string test_file_path = this->path + "/tests" + "/try_main.cpp";
+  std::ofstream ofs(test_file_path);
+  ofs << "#include <iostream>\n\nint main() {\n  "
+    "std::string cmd = \"g++ -std=c++17 -o build/tests/try_main.o src/main.cpp\";\n"
+    "\tint build_status = std::system(cmd.c_str());\n"
+    "\tswitch (build_status) {\n"
+    "\t  case 0:\n"
+    "\t    std::cout << \"Built hello world\" << std::endl;\n"
+    "\t    break;\n"
+    "\t  case 1:\n"
+    "\t    std::cout << \"Error: Failed to build hello world\" << std::endl;\n"
+    "\t    break;\n"
+    "\t  default:\n"
+    "\t    std::cout << \"Error: Unknown error\" << std::endl;\n"
+    "\t    break;\n"
+    "\t}\n"
+    "\tcmd = \"build/tests/try_main.o\";\n"
+    "\tint run_status = std::system(cmd.c_str());\n"
+    "\treturn run_status;\n}\n";
+  ofs.close();
 }
 
 /**
@@ -108,4 +154,13 @@ void Initializer::make_git() {
     std::cout << "Error: Failed to initialize git repository in " << this->path
       << std::endl;
   }
+}
+
+void Initializer::manifest() {
+  std::ofstream ofs(this->path + "/saleen.toml");
+  ofs << "[package]\n"
+    "name = \"" << this->path << "\"\n"
+    "version = \"0.1.0\"\n\n"
+    "[tests]\n"
+    "main = \"/tests/try_main.cpp\"";
 }

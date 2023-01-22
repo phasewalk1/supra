@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/21 19:40:24 by kat               #+#    #+#             */
+/*   Updated: 2023/01/21 20:03:06 by kat              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.hpp"
 #include "runner.hpp"
 
@@ -38,7 +50,7 @@ std::vector<std::string> Parser::collect_argv(char** argv) {
  *
  * @return OPT: the option to run the program in
  */
-OPT Parser::parse() {
+OPT Parser::mode() {
   if (!(argc > 1)) {
     throw std::runtime_error("Error: No arguments given");
   }
@@ -61,7 +73,7 @@ OPT Parser::parse() {
   }
 }
 
-bool Parser::valid_argc() {
+bool Parser::ok() {
   switch (this->opt) {
   case OPT::NEW:
     return this->argc >= 3;
@@ -69,6 +81,25 @@ bool Parser::valid_argc() {
     return this->argc == 2;
   case OPT::TEST:
     return this->argc == 2;
+  }
+}
+
+bool Parser::has_one_flag() {
+  switch (this->opt) {
+  case OPT::NEW:
+    return this->argc >= 4;
+  case OPT::CHECK:
+    return this->argc >= 3;
+  case OPT::TEST:
+    return this->argc >= 3;
+  }
+}
+
+bool Parser::has_flag(const std::string flag) {
+  for (auto arg : this->argv) {
+    if (arg == flag) {
+      return true;
+    }
   }
 }
 

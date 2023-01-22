@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   runner.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
+/*   Updated: 2023/01/21 20:26:06 by kat              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.hpp"
 #include "runner.hpp"
 #include "init.hpp"
@@ -26,43 +38,41 @@ void Runner::set_parser(Parser parser) {
  *
  * TODO: Make this more readable
  */
-void Runner::run() {
-  // Determine the mode to run the program in
-  OPT mode = this->parser.parse();
-  // Check if the arguments are valid
-  if (!(this->parser.valid_argc())) {
-    throw std::runtime_error("Error: Invalid arguments");
-  }
-  else {
-    std::string path;
-    switch (mode) {
-    case OPT::CHECK:
-      this->check();
-      break;
-    case OPT::NEW:
-      path = this->args[NEW_PATH_ARG_IDX];
-      bool with_benches;
-      if (this->argc == 4) {
-        if (this->args[NEW_FLAG_ARG_IDX] == "-b" || this->args[NEW_FLAG_ARG_IDX] == "--with-benches") {
-          with_benches = true;
-        }
-        else {
-          throw std::runtime_error("Error: Invalid flag");
-        }
+void Runner::run(OPT mode) {
+  std::string path;
+  switch (mode) {
+  // ******* CHECK MODE *******
+  case OPT::CHECK:
+    this->check();
+    break;
+  // ******* NEW MODE *******
+  case OPT::NEW:
+    // Get the path to the new project
+    path = this->args[NEW_PATH_ARG_IDX];
+    bool force, with_benches;
+    if (this->parser.has_one_flag()) {
+      // Check if the --with-benches flag is set
+      if (this->parser.has_flag("-b") || this->parser.has_flag("--with-benches")) {
+        with_benches = true;
       }
-      else {
-        with_benches = false;
+      if (this->parser.has_flag("--force")) {
+        force = true;
       }
-      this->instantiate(path, with_benches);
-      break;
-    case OPT::TEST:
-      Tester tester = Tester();
-      Manifest manif = this->parser.to_manifest(this->parser.get_config());
-      std::vector<std::string> test_files = tester.get_test_files(manif);
-      for (std::string file : test_files) {
-        std::string path_to_test = "tests/" + file + ".cpp";
-        tester.run_test(path_to_test);
-      }
+    }
+    else {
+      with_benches = false;
+    }
+    // Create the new project
+    this->instantiate(path, force, with_benches);
+    break;
+  // ******* TEST MODE *******
+  case OPT::TEST:
+    std::tuple<Tester, std::vector<std::string>> tester_and_args = this->setup_tester();
+    Tester tester = std::get<0>(tester_and_args);
+    std::vector<std::string> test_files = std::get<1>(tester_and_args);
+    for (std::string file : test_files) {
+      std::string path_to_test = "tests/" + file + ".cpp";
+      tester.run_test(path_to_test);
     }
   }
 }
@@ -73,9 +83,9 @@ void Runner::run() {
  * @param path(std::string): The path to the directory to create (relative to the current directory
  * @param with_benches(bool): Whether or not to create benchmark directory (default: false)
  */
-void Runner::instantiate(std::string path, bool with_benches) {
-  Initializer init = Initializer(path);
-  init.init_dir(with_benches);
+void Runner::instantiate(std::string path, bool force, bool with_benches) {
+  Initializer init = Initializer(path, force);
+  init.spinup(with_benches);
 }
 
 /**
@@ -91,4 +101,11 @@ void Runner::check() {
   catch (std::runtime_error& e) {
     std::cout << e.what() << std::endl;
   }
+}
+
+std::tuple<Tester, std::vector<std::string>>Runner::setup_tester() {
+  Tester tester = Tester();
+  Manifest manif = this->parser.to_manifest(this->parser.get_config());
+  std::vector<std::string> test_files = tester.get_test_files(manif);
+  return std::make_tuple(tester, test_files);
 }
