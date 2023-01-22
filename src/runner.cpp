@@ -6,7 +6,7 @@
 /*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 20:26:06 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:08:02 by kat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void Runner::set_parser(Parser parser) {
 /**
  * @brief Switch on this->mode and run the program in the specified mode
  * @dev Throws an error if the mode is invalid or if the arguments are invalid
- *
- * TODO: Make this more readable
  */
 void Runner::run(OPT mode) {
   std::string path;
@@ -70,10 +68,8 @@ void Runner::run(OPT mode) {
     std::tuple<Tester, std::vector<std::string>> tester_and_args = this->setup_tester();
     Tester tester = std::get<0>(tester_and_args);
     std::vector<std::string> test_files = std::get<1>(tester_and_args);
-    for (std::string file : test_files) {
-      std::string path_to_test = "tests/" + file + ".cpp";
-      tester.run_test(path_to_test);
-    }
+    std::map<std::string, bool> results = tester.run(test_files);
+    tester.dump_results(results);
   }
 }
 

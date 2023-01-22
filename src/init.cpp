@@ -6,7 +6,7 @@
 /*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:38 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 20:28:36 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:08:49 by kat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void Initializer::build_dir(bool with_benches) {
   }
 }
 
+/**
+ * @brief: Creates a hello world file in src/main.cpp
+ */
 void Initializer::hello_world() {
   // create src file
   std::string src_file_path = this->path + "/src" + "/main.cpp";
@@ -87,6 +90,9 @@ void Initializer::hello_world() {
   ofs.close();
 }
 
+/**
+ * @brief: Creates a test file in tests/try_main.cpp
+ */
 void Initializer::test_hello_world() {
   std::string test_file_path = this->path + "/tests" + "/try_main.cpp";
   std::ofstream ofs(test_file_path);
@@ -156,6 +162,9 @@ void Initializer::make_git() {
   }
 }
 
+/**
+ * @brief: Creates a manifest file in the project directory
+ */
 void Initializer::manifest() {
   std::ofstream ofs(this->path + "/saleen.toml");
   ofs << "[package]\n"

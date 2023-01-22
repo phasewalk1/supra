@@ -6,7 +6,7 @@
 /*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:29 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 20:04:11 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:09:06 by kat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 #include <stdexcept>
 #include <string>
 
+/**
+ * @brief Runs the program
+ * @dev Throws an error if the number of arguments is invalid
+ * 
+ * @param p(Parser&): The parser
+ * @param args(std::vector<std::string>): The arguments
+ */
 void saleen(Parser& p, std::vector<std::string> args) {
   // build a runner over the arguments
   Runner r(args);

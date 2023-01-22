@@ -6,7 +6,7 @@
 /*   By: kat <kat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:24 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 20:03:06 by kat              ###   ########.fr       */
+/*   Updated: 2023/01/21 21:07:44 by kat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ OPT Parser::mode() {
   }
 }
 
+/**
+ * @brief Validates the number of arguments for the given option
+ *
+ * @return (true) If argc is valid for the given option
+ * @return (false) If argc is invalid for the given option
+*/
 bool Parser::ok() {
   switch (this->opt) {
   case OPT::NEW:
@@ -84,6 +90,12 @@ bool Parser::ok() {
   }
 }
 
+/**
+ * @brief Checks if any flags are present in the arguments
+ *
+ * @return (true) If argv contains any flags
+ * @return (false) If argv contains no flags
+*/
 bool Parser::has_one_flag() {
   switch (this->opt) {
   case OPT::NEW:
@@ -95,6 +107,13 @@ bool Parser::has_one_flag() {
   }
 }
 
+/**
+ * @brief Checks if a specific flag is present in the arguments
+ *
+ * @param flag(std::string): The flag to check for
+ * @return (true) If argv contains the flag
+ * @return (false) If argv does not contain the flag
+*/
 bool Parser::has_flag(const std::string flag) {
   for (auto arg : this->argv) {
     if (arg == flag) {
@@ -178,6 +197,12 @@ inline void Parser::debug_deps(std::vector<Dependency> deps) {
   }
 }
 
+/**
+ * @brief Parses the tests section into a map of test names and paths
+ *
+ * @param cfg(toml::table): The parsed manifest file
+ * @return std::map<std::string, std::string>
+ */
 std::map<std::string, std::string> Parser::to_tests(toml::table cfg) {
   std::map<std::string, std::string> tests;
 
