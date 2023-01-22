@@ -6,7 +6,7 @@
 /*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:38 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 21:54:49 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/21 22:02:03 by ethangalluc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@
  * @brief Construct a new Init:: Initializer object
  * @dev Throws an error if the directory exists and is not empty
  */
-Initializer::Initializer(std::string path, bool force) { 
+Initializer::Initializer(std::string path, bool force) {
   if (fs::exists(path) && !(fs::is_empty(path)) && !(force)) {
     std::string err = "Error: Directory already exists and is not empty. Rerun with 'saleen new " + path + " --force' to overwrite.";
     throw std::runtime_error(err);
   }
   else {
     this->path = path;
-  } 
+  }
 }
 
 /**
  * @brief: Creates a new project directory and its subdirectories
- * 
+ *
  * @param bench_mode(bool): Whether or not to create a bench/ directory
  */
 void Initializer::spinup(bool bench_mode) {
@@ -160,6 +160,9 @@ void Initializer::make_git() {
     std::cout << "Error: Failed to initialize git repository in " << this->path
       << std::endl;
   }
+  std::ofstream ofs(this->path + "/.gitignore");
+  ofs << "/build\n/bin";
+  ofs.close();
 }
 
 /**
