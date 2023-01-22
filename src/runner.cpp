@@ -1,13 +1,14 @@
 #include "parser.hpp"
 #include "runner.hpp"
 #include "init.hpp"
+#include "tester.hpp"
 
 #define NEW_PATH_ARG_IDX 2
 #define NEW_FLAG_ARG_IDX 3
 
-Runner::Runner(std::vector<std::string> args) {
-  this->argc = args.size();
-  this->args = args;
+Runner::Runner(std::vector<std::string> argv) {
+  this->argc = argv.size();
+  this->args = argv;
 }
 
 /**
@@ -33,12 +34,13 @@ void Runner::run() {
     throw std::runtime_error("Error: Invalid arguments");
   }
   else {
+    std::string path;
     switch (mode) {
     case OPT::CHECK:
       this->check();
       break;
     case OPT::NEW:
-      std::string path = this->args[NEW_PATH_ARG_IDX];
+      path = this->args[NEW_PATH_ARG_IDX];
       bool with_benches;
       if (this->argc == 4) {
         if (this->args[NEW_FLAG_ARG_IDX] == "-b" || this->args[NEW_FLAG_ARG_IDX] == "--with-benches") {
@@ -53,6 +55,19 @@ void Runner::run() {
       }
       this->instantiate(path, with_benches);
       break;
+    case OPT::TEST:
+      std::cout << "initializing tester...\n";
+      Tester tester = Tester();
+      std::cout << "getting config...\n";
+      Manifest manif = this->parser.to_manifest(this->parser.get_config());
+      std::cout << "getting test files...\n";
+      std::vector<std::string> test_files = tester.get_test_files(manif);
+      std::cout << "got " << test_files.size() << " test file(s)\n";
+      for (std::string file : test_files) {
+        std::string path_to_test = "tests/" + file + ".cpp";
+        std::cout << "running test file: " << path_to_test << "\n";
+        tester.run_test(path_to_test);
+      }
     }
   }
 }

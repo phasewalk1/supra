@@ -51,6 +51,10 @@ OPT Parser::parse() {
       this->opt = OPT::CHECK;
       return CHECK;
     }
+    else if (argv[1] == "test") {
+      this->opt = OPT::TEST;
+      return TEST;
+    }
     else {
       throw std::runtime_error("Error: Invalid argument");
     }
@@ -62,6 +66,8 @@ bool Parser::valid_argc() {
   case OPT::NEW:
     return this->argc >= 3;
   case OPT::CHECK:
+    return this->argc == 2;
+  case OPT::TEST:
     return this->argc == 2;
   }
 }
@@ -141,6 +147,18 @@ inline void Parser::debug_deps(std::vector<Dependency> deps) {
   }
 }
 
+std::map<std::string, std::string> Parser::to_tests(toml::table cfg) {
+  std::map<std::string, std::string> tests;
+
+  for (auto& [key, value] : *cfg["tests"].as_table()) {
+    std::string key_string = std::string(key);
+    std::string value_string = value.value_exact<std::string>().value();
+    tests[key_string] = value_string;
+  }
+
+  return tests;
+}
+
 /**
  * @brief Parses the manifest file into a Manifest object
  * @dev Internally calls to_package() and to_deps()
@@ -153,6 +171,11 @@ Manifest Parser::to_manifest(toml::table cfg) {
 
   Package pkg = to_package(cfg);
   std::vector<Dependency> deps = to_deps(cfg);
+  std::map<std::string, std::string> tests = to_tests(cfg);
+
+  manifest.package = pkg;
+  manifest.deps = deps;
+  manifest.tests = tests;
 
   return manifest;
 }

@@ -5,3 +5,6 @@ authors = ["phasewalk1"]
 
 [deps]
 tomlplusplus = "1.2.1"
+
+[tests]
+new = "new.cpp"

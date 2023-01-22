@@ -14,6 +14,7 @@
 /* ************************************************************************** */
 
 #include "toml.hpp"
+#include "manif.hpp"
 
 #include <cstring>
 #include <iostream>
@@ -28,52 +29,12 @@
  *     NEW: Create a new project, consisting of a manifest file, src/, and
  *          tests/ directories, and a Makefile
  *     CHECK: Check the manifest file for errors
+ *     TEST: Run the tests in the tests/ directory
  */
 enum OPT {
   NEW,
   CHECK,
-};
-
-/**
- * @brief: Package metadata information
- * @dev: Used to serialize the package section of the manifest file
- *
- * @fields:
- *    name(std::string): The name of the package
- *    version(std::string): The version of the package
- *    description(std::optional<std::string>): A description of the package
- *    authors(std::optional<std::vector<std::string>>): A list of authors
- */
-struct Package {
-  std::string name;
-  std::string version;
-  std::optional<std::string> description;
-  std::optional<std::vector<std::string>> authors;
-};
-
-/**
- * @brief: A dependency object for a package in the manifest file
- * @dev: Contains a std::map of package names to their version requirements
- *
- * @fields:
- *   dep(std::map<std::string, std::string>): A map of package names to their version
- */
-struct Dependency {
-  std::map<std::string, std::string> dep;
-  std::string& operator[](const std::string& key) { return dep[key]; }
-};
-
-/**
- * @brief: A manifest object for a package
- * @dev: Serialized from the manifest file
- *
- * @fields:
- *  package(Package): The package section of the manifest file
- *  deps(std::vector<Dependency>): The deps section of the manifest file
- */
-struct Manifest {
-  Package package;
-  std::vector<Dependency> deps;
+  TEST,
 };
 
 /**
@@ -121,6 +82,9 @@ private:
   // Parse the dependencies section of the manifest file
   // dev: called by `to_manifest()`
   std::vector<Dependency> to_deps(toml::table cfg);
+  // Parse the tests section of the manifest file
+  // dev: called by `to_manifest()`
+  std::map<std::string, std::string> to_tests(toml::table cfg);
 };
 
 #endif // __PARSER_H__
