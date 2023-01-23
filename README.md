@@ -108,7 +108,7 @@ Below is an example `supra` test that tests the behavior of an integer function,
 
 int main() {
   int result = add(10, 2);
-	if (result == 12) { return 0; }
-	else { throw tester::SupraException("add() failed at: 10 + 2 != 12"); }
+  if (result == 12) { return 0; }
+  else { throw tester::SupraException("add() failed at: 10 + 2 != 12"); }
 }
 ```
