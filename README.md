@@ -92,6 +92,9 @@ Or,
 supra new my_project --with-benches
 ```
 
+## Documentation
+The master documentation statics can be found at [docsupra](https://github.com/phasewalk1/docsupra). Open [index.html](https://github.com/phasewalk1/docsupra/tree/master/docs/index.html) in the browser of your choice to view the documentation locally. An online version is also hosted at https://phasewalk1.github.io/docsupra.
+
 ## Building Supra Tests
 
 To build integrated tests in your `supra` project, or the tests in this repository, you will need a local installation of [libsupra](https://github.com/phasewalk1/libsupra) (the `supra` headers). To install `libsupra` locally,
