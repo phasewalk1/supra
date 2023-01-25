@@ -225,3 +225,29 @@ void TestBuilder::show_passing(const std::string test_path,
     break;
   }
 }
+
+void TestWriter::depth_of_manifest() {
+  std::filesystem::path look(".");
+  while (look.has_relative_path()) {
+    if (std::filesystem::exists(look / "supra.toml")) {
+      break;
+    }
+    look = look / "..";
+  }
+}
+
+bool TestWriter::ok(std::string path) {
+  if (std::filesystem::exists(path) && !(std::filesystem::is_empty(path))) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool TestWriter::ok_init(std::optional<std::string> tests_dir) {
+  if (tests_dir.has_value() && std::filesystem::exists(tests_dir.value())) {
+    return true;
+  } else {
+    return false;
+  }
+}

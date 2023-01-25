@@ -1,1 +1,1 @@
-make && sudo cp bin/saleen /usr/local/bin/saleen
+make && sudo cp bin/supra /usr/local/bin/supra

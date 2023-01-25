@@ -30,7 +30,7 @@ Parser::Parser() {
  * @param argc(int): The number of arguments passed to the program
  * @param argv(char**): The arguments passed to the program
  */
-Parser::Parser(int argc, char** argv) {
+Parser::Parser(int argc, char **argv) {
   this->argc = argc;
   this->argv = this->collect_argv(argv);
 }
@@ -40,7 +40,7 @@ Parser::Parser(int argc, char** argv) {
  *
  * @return std::vector<std::string>
  */
-std::vector<std::string> Parser::collect_argv(char** argv) {
+std::vector<std::string> Parser::collect_argv(char **argv) {
   std::vector<std::string> vec;
   for (int i = 0; i < this->argc; i++) {
     vec.push_back(argv[i]);

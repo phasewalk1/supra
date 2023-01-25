@@ -6,7 +6,7 @@
 /*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:38 by kat               #+#    #+#             */
-/*   Updated: 2023/01/24 19:20:54 by phasewalk1       ###   ########.fr       */
+/*   Updated: 2023/01/24 22:43:34 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void Initializer::spinup(bool bench_mode) {
     // populate src/
     this->hello_world();
     // populate tests/
-    this->test_hello_world();
+    this->init_test();
     // create Makefile
     this->makefile();
     // create git repo
@@ -60,7 +60,7 @@ void Initializer::spinup(bool bench_mode) {
     // create manifest
     this->manifest();
     std::cout << "Created directory " << this->path << std::endl;
-  } catch (const fs::filesystem_error &e) {
+  } catch (const fs::filesystem_error& e) {
     std::cout << e.what() << std::endl;
   }
 
@@ -98,29 +98,8 @@ void Initializer::hello_world() {
 /**
  * @brief: Creates a test file in tests/try_main.cpp
  */
-void Initializer::test_hello_world() {
-  std::string test_file_path = this->path + "/tests" + "/try_main.cpp";
-  std::ofstream ofs(test_file_path);
-  ofs << "#include <iostream>\n\nint main() {\n  "
-         "std::string cmd = \"g++ -std=c++17 -o build/tests/try_main.o "
-         "src/main.cpp\";\n"
-         "\tint build_status = std::system(cmd.c_str());\n"
-         "\tswitch (build_status) {\n"
-         "\t  case 0:\n"
-         "\t    std::cout << \"Built hello world\" << std::endl;\n"
-         "\t    break;\n"
-         "\t  case 1:\n"
-         "\t    std::cout << \"Error: Failed to build hello world\" << "
-         "std::endl;\n"
-         "\t    break;\n"
-         "\t  default:\n"
-         "\t    std::cout << \"Error: Unknown error\" << std::endl;\n"
-         "\t    break;\n"
-         "\t}\n"
-         "\tcmd = \"build/tests/try_main.o\";\n"
-         "\tint run_status = std::system(cmd.c_str());\n"
-         "\treturn run_status;\n}\n";
-  ofs.close();
+void Initializer::init_test() {
+  testing::TestWriter::write("try_main", true, this->path + "/tests");
 }
 
 /**
@@ -185,6 +164,4 @@ void Initializer::manifest() {
          "main = \"/tests/try_main.cpp\"";
 }
 
-inline void Initializer::init_test(std::string name) {
-  TestWriter::write(name);
-}
+inline void Initializer::new_test(std::string name) { TestWriter::write(name); }

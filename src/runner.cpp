@@ -6,7 +6,7 @@
 /*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:39:12 by kat               #+#    #+#             */
-/*   Updated: 2023/01/24 19:48:16 by phasewalk1       ###   ########.fr       */
+/*   Updated: 2023/01/24 22:22:14 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ void Runner::run(OPT mode) {
     break;
   // ******* NEW MODE *******
   case OPT::NEW:
+    // ******* CREATE TEST MODE *******
     if (this->cparser.has_flags(std::vector<std::string>{"-t", "--test"})) {
       std::string name = this->args[NEW_FLAG_ARG_IDX];
-      testing::TestWriter::write(name);
+      testing::TestWriter::write(name, false);
       break;
-    } else {
+    }
+    // ******* PURE NEW MODE *******
+    else {
       std::tuple<std::string, bool, bool> deps = this->get_new_args();
       std::string path = std::get<0>(deps);
       bool force = std::get<1>(deps);
@@ -65,9 +68,11 @@ void Runner::run(OPT mode) {
     builder_and_results = this->test();
     builder = std::get<0>(builder_and_results);
     builder.dump_results(std::get<1>(builder_and_results));
+    break;
   case OPT::FMT:
     fmt::Formatter fmt = fmt::Formatter();
     fmt.format();
+    break;
   }
 }
 
@@ -118,7 +123,7 @@ void Runner::check() {
     Manifest manif = this->mparser->into_manifest(cfg);
     std::cout << "Manifest checks out!"
               << "\n";
-  } catch (std::runtime_error& e) {
+  } catch (std::runtime_error &e) {
     std::cout << e.what() << std::endl;
   }
 }

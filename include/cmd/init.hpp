@@ -33,14 +33,14 @@ class Initializer {
 public:
   Initializer(std::string path, bool force);
   virtual void spinup(bool bench_mode);
-  virtual inline void init_test(std::string name);
+  virtual inline void new_test(std::string name);
 
 private:
   std::string path;
 
   void build_dir(bool with_benches);
   void hello_world();
-  void test_hello_world();
+  void init_test();
   void makefile();
   void make_git();
   void manifest();

@@ -61,7 +61,7 @@ protected:
 class SupraException : public std::exception {
 public:
   SupraException(std::string msg) { this->msg = msg; };
-  virtual const char* what() const throw() { return this->msg.c_str(); };
+  virtual const char *what() const throw() { return this->msg.c_str(); };
 
 private:
   std::string msg;
@@ -81,7 +81,8 @@ public:
 inline std::string get_test_template(std::string name) {
   std::string temp = "// " + name + ".cpp\n\n";
   temp += "#include <iostream>\n#include <supra/tester.hpp>\n\n";
-  temp += "// Define test behavior\nstd::optional<testing::SupraException> test() {};\n\n";
+  temp += "// Define test behavior\nstd::optional<testing::SupraException> "
+          "test() {};\n\n";
   temp += "// Run the test\nint main() {\n";
   temp += "  return 0;\n";
   temp += "}\n";
@@ -90,33 +91,42 @@ inline std::string get_test_template(std::string name) {
 
 class TestWriter {
 public:
-  static inline void write(std::string name) {
-    // walk up or down to get to the root of the project where "supra.toml" is
-    // located
-    std::filesystem::path look(".");
-    while (look.has_relative_path()) {
-      if (std::filesystem::exists(look / "supra.toml")) {
-        break;
-      }
-      look = look / "..";
-    }
+  static inline void
+  write(std::string name, bool init_stage = false,
+        std::optional<std::string> tests_dir = std::nullopt) {
     std::string path = "tests/" + name + ".cpp";
-
-    if (std::filesystem::exists(path) && !(std::filesystem::is_empty(path))) {
-      throw testing::SupraWriterException(
-          "Error: Test <" + path + "> already exists and is not an empty file");
-    } else {
-      // create the tests directory if it doesn't exist
-      if (!std::filesystem::exists("tests")) {
-        std::filesystem::create_directory("tests");
+    switch (init_stage) {
+    case false:
+      TestWriter::depth_of_manifest();
+      if (TestWriter::ok(path)) {
+        // create the tests directory if it doesn't exist
+        if (!std::filesystem::exists("tests")) {
+          std::filesystem::create_directory("tests");
+        }
+        // create the test file
+        std::ofstream test_file;
+        test_file.open(path);
+        test_file << testing::get_test_template(name);
+        test_file.close();
+      } else {
+        throw SupraWriterException("Test file already exists or is not empty");
       }
-      // create the test file
-      std::ofstream test_file;
-      test_file.open(path);
-      test_file << testing::get_test_template(name);
-      test_file.close();
+      break;
+    case true:
+      if (TestWriter::ok_init(tests_dir)) {
+        std::string test_path = tests_dir.value() + "/" + name + ".cpp";
+        std::ofstream test_file;
+        test_file.open(test_path);
+        test_file << testing::get_test_template(name);
+        test_file.close();
+      }
+      break;
     }
   }
+
+  static void depth_of_manifest();
+  static bool ok(std::string path);
+  static bool ok_init(std::optional<std::string> tests_dir);
 };
 } // namespace testing
 #endif // __TESTER_H__
