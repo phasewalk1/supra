@@ -1,4 +1,5 @@
 # supra
+> For <C++17> and beyond.
 
 `supra` is a toolkit that attempts to offer modernized development workflows to C++ developers. If you're familiar with `cargo` or `npm`, then `supra` will feel right at home in your toolbelt.
 
@@ -103,12 +104,34 @@ To build integrated tests in your `supra` project, or the tests in this reposito
 Below is an example `supra` test that tests the behavior of an integer function, `add` that we defined in a header file `intmath`:
 
 ```C++
-#include "intmath.hpp"
+#include <iostream>
 #include <supra/tester.hpp>
 
+#define SUPRA_TEST true
+using testing::SupraException;
+using testing::SUPRA_FAIL;
+using testing::SUPRA_PASS;
+
+/******************************************************************************
+ *                        Define behavior of the test                         *
+ ******************************************************************************/
+std::optional<SupraException> test() {
+  if (add(10, 2) != 12) {
+    return SupraException("add() failed at: add(10,2)");
+  } else { return nullopt; }
+}
+
+/******************************************************************************
+ *                              Run the Test                                  *
+ ******************************************************************************/
 int main() {
-  int result = add(10, 2);
-  if (result == 12) { return 0; }
-  else { throw tester::SupraException("add() failed at: 10 + 2 != 12"); }
+  std::optional<SupraException> status = test();
+  switch (status.has_value()) {
+  case SUPRA_FAIL:
+    std::cerr << status.value().what() << std::endl;
+    return 1;
+  case SUPRA_PASS:
+    return 0;
+  }
 }
 ```

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ethangallucci <ethangallucci@student.42    +#+  +:+       +#+        */
+/*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:38 by kat               #+#    #+#             */
-/*   Updated: 2023/01/21 22:02:03 by ethangalluc      ###   ########.fr       */
+/*   Updated: 2023/01/24 19:20:54 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmd/init.hpp"
+#include "cmd/tester.hpp"
 
 #include <cstdlib>
 #include <filesystem>
@@ -18,6 +19,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+
+using testing::TestWriter;
 
 /**
  * @brief Construct a new Init:: Initializer object
@@ -180,4 +183,8 @@ void Initializer::manifest() {
          "version = \"0.1.0\"\n\n"
          "[tests]\n"
          "main = \"/tests/try_main.cpp\"";
+}
+
+inline void Initializer::init_test(std::string name) {
+  TestWriter::write(name);
 }

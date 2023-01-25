@@ -6,7 +6,7 @@
 /*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:24 by kat               #+#    #+#             */
-/*   Updated: 2023/01/22 15:21:37 by phasewalk1       ###   ########.fr       */
+/*   Updated: 2023/01/24 19:51:41 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Parser::Parser() {
  * @param argc(int): The number of arguments passed to the program
  * @param argv(char**): The arguments passed to the program
  */
-Parser::Parser(int argc, char **argv) {
+Parser::Parser(int argc, char** argv) {
   this->argc = argc;
   this->argv = this->collect_argv(argv);
 }
@@ -40,7 +40,7 @@ Parser::Parser(int argc, char **argv) {
  *
  * @return std::vector<std::string>
  */
-std::vector<std::string> Parser::collect_argv(char **argv) {
+std::vector<std::string> Parser::collect_argv(char** argv) {
   std::vector<std::string> vec;
   for (int i = 0; i < this->argc; i++) {
     vec.push_back(argv[i]);
@@ -110,6 +110,8 @@ bool Parser::has_one_flag() {
     return this->argc >= 3;
   case OPT::TEST:
     return this->argc >= 3;
+  case OPT::FMT:
+    return this->argc >= 3;
   }
 }
 
@@ -123,6 +125,15 @@ bool Parser::has_one_flag() {
 bool Parser::has_flag(const std::string flag) {
   for (auto arg : this->argv) {
     if (arg == flag) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool Parser::has_flags(const std::vector<std::string> flags) {
+  for (auto flag : flags) {
+    if (this->has_flag(flag)) {
       return true;
     }
   }

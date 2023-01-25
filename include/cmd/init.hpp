@@ -33,6 +33,7 @@ class Initializer {
 public:
   Initializer(std::string path, bool force);
   virtual void spinup(bool bench_mode);
+  virtual inline void init_test(std::string name);
 
 private:
   std::string path;

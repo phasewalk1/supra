@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Wno-switch-bool -std=c++17
+CFLAGS = -Wall -Wextra -Wno-switch-bool -Wno-comment -std=c++17
 
 SRC_DIR = src
 INC_DIR = include

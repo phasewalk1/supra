@@ -16,6 +16,8 @@
 #include "util/logger.hpp"
 #include "util/parser.hpp"
 
+#include <filesystem>
+
 /**
  * @brief The Tester class
  * @dev Used to run the tests in the tests/ directory
@@ -26,11 +28,14 @@
  *     BUILD_CMD(std::string): The command to build the test files
  */
 
-namespace tester {
-class Tester {
+namespace testing {
+/****************************************************************************
+ * TestBuilder
+ /***************************************************************************/
+class TestBuilder {
 public:
-  Tester();
-  Tester(std::string test_dir);
+  TestBuilder();
+  TestBuilder(std::string test_dir);
   virtual void setup();
   std::map<std::string, bool> run(std::vector<std::string> test_files);
   virtual std::vector<std::string> get_test_files(manif::Manifest manif);
@@ -50,13 +55,68 @@ protected:
   virtual bool invoke_test(std::string invoke_cmd);
 };
 
+/****************************************************************************
+ * SupraException
+ /***************************************************************************/
 class SupraException : public std::exception {
 public:
   SupraException(std::string msg) { this->msg = msg; };
-  virtual const char *what() const throw() { return this->msg.c_str(); };
+  virtual const char* what() const throw() { return this->msg.c_str(); };
 
 private:
   std::string msg;
 };
-};     // namespace tester
+
+class SupraWriterException : public SupraException {
+public:
+  SupraWriterException(std::string msg) : SupraException(msg) {}
+};
+
+/****************************************************************************
+ *                              SupraTest
+ /***************************************************************************/
+#define SUPRA_PASS 0
+#define SUPRA_FAIL 1
+
+inline std::string get_test_template(std::string name) {
+  std::string temp = "// " + name + ".cpp\n\n";
+  temp += "#include <iostream>\n#include <supra/tester.hpp>\n\n";
+  temp += "// Define test behavior\nstd::optional<testing::SupraException> test() {};\n\n";
+  temp += "// Run the test\nint main() {\n";
+  temp += "  return 0;\n";
+  temp += "}\n";
+  return temp;
+}
+
+class TestWriter {
+public:
+  static inline void write(std::string name) {
+    // walk up or down to get to the root of the project where "supra.toml" is
+    // located
+    std::filesystem::path look(".");
+    while (look.has_relative_path()) {
+      if (std::filesystem::exists(look / "supra.toml")) {
+        break;
+      }
+      look = look / "..";
+    }
+    std::string path = "tests/" + name + ".cpp";
+
+    if (std::filesystem::exists(path) && !(std::filesystem::is_empty(path))) {
+      throw testing::SupraWriterException(
+          "Error: Test <" + path + "> already exists and is not an empty file");
+    } else {
+      // create the tests directory if it doesn't exist
+      if (!std::filesystem::exists("tests")) {
+        std::filesystem::create_directory("tests");
+      }
+      // create the test file
+      std::ofstream test_file;
+      test_file.open(path);
+      test_file << testing::get_test_template(name);
+      test_file.close();
+    }
+  }
+};
+} // namespace testing
 #endif // __TESTER_H__

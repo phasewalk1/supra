@@ -63,6 +63,8 @@ public:
   bool has_one_flag();
   // Check if the args contain a specific flag
   bool has_flag(const std::string flag);
+  // check if the args contain one of a list of flags
+  bool has_flags(const std::vector<std::string> flags);
 
   // Getters
   inline int get_argc() { return this->argc; }

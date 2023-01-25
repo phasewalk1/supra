@@ -1,12 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester.cpp                                         :+:      :+:    :+:   */
+/*   TestBuilder.cpp                                         :+:      :+:    :+:
+ */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phasewalk1 <staticanne@skiff.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:40:17 by kat               #+#    #+#             */
-/*   Updated: 2023/01/22 15:09:51 by phasewalk1       ###   ########.fr       */
+/*   Updated: 2023/01/24 18:16:00 by phasewalk1       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +17,43 @@
 
 namespace fs = std::filesystem;
 using manif::Manifest;
-using tester::Tester;
+using testing::TestBuilder;
+using testing::TestWriter;
+
+/******************************************************************************
+ *                          TestBuilder  Impl                                 *
+ ******************************************************************************/
 
 /**
- * @brief Construct a new Tester:: Tester object
+ * @brief Construct a new TestBuilder:: TestBuilder object
  * @dev Sets the TEST_DIR to the default value and the BUILD_CMD to the default
  * value
  */
-Tester::Tester() {
+TestBuilder::TestBuilder() {
   this->TEST_DIR = std::string("tests");
   this->BUILD_CMD = std::string("g++ -std=c++17 -o");
   this->logger = Logger();
 }
 
 /**
- * @brief Construct a new Tester:: Tester object
+ * @brief Construct a new TestBuilder:: TestBuilder object
  * @dev Sets the TEST_DIR to the specified value and the BUILD_CMD to the
  * default value
  *
  * @param test_dir(std::string): The path to the tests/ directory
  */
-Tester::Tester(std::string test_dir) {
+TestBuilder::TestBuilder(std::string test_dir) {
   this->TEST_DIR = test_dir;
   this->BUILD_CMD = std::string("g++ -std=c++17 -o");
   this->logger = Logger();
 }
 
 /**
- * @brief Performs the setup for the tester
+ * @brief Performs the setup for the TestBuilder
  * @dev Creates "build/tests/" directory if it doesn't exist
  */
-void Tester::setup() {
-  this->logger.debug("Setting up tester...");
+void TestBuilder::setup() {
+  this->logger.debug("Setting up TestBuilder...");
   this->test_builds();
 }
 
@@ -57,7 +63,7 @@ void Tester::setup() {
  * @param test_path(std::string): The path to the test file
  * @return (std::string): The build command for the test
  */
-std::string Tester::get_build_cmd(const std::string test_path) {
+std::string TestBuilder::get_build_cmd(const std::string test_path) {
   std::string build_path = "build/" + test_path + ".out";
   std::string build_cmd = this->BUILD_CMD + " " + build_path + " " + test_path;
   return build_cmd;
@@ -69,7 +75,7 @@ std::string Tester::get_build_cmd(const std::string test_path) {
  * @param test_path(std::string): The path to the test file
  * @return (std::string): The run command for the test
  */
-std::string Tester::get_invoke_cmd(const std::string test_path) {
+std::string TestBuilder::get_invoke_cmd(const std::string test_path) {
   std::string invoke_cmd = "build/" + test_path + ".out";
   return invoke_cmd;
 }
@@ -80,7 +86,8 @@ std::string Tester::get_invoke_cmd(const std::string test_path) {
  *
  * @return std::map<std::string, bool>: A map of test names and their results
  */
-std::map<std::string, bool> Tester::run(std::vector<std::string> test_files) {
+std::map<std::string, bool>
+TestBuilder::run(std::vector<std::string> test_files) {
   std::map<std::string, bool> results;
 
   this->logger.debug("Running tests...");
@@ -100,7 +107,7 @@ std::map<std::string, bool> Tester::run(std::vector<std::string> test_files) {
  * @param results(std::map<std::string, bool>): A map of test names and their
  * results
  */
-void Tester::dump_results(std::map<std::string, bool> results) {
+void TestBuilder::dump_results(std::map<std::string, bool> results) {
   std::cout << std::endl;
   std::cout << std::string(30, '*') << " TEST RESULTS " << std::string(30, '*')
             << '\n';
@@ -122,7 +129,7 @@ void Tester::dump_results(std::map<std::string, bool> results) {
  * @param manif(Manifest): The manifest (saleen.toml) object
  * @return std::vector<std::string>: A vector of test file paths
  */
-std::vector<std::string> Tester::get_test_files(Manifest manif) {
+std::vector<std::string> TestBuilder::get_test_files(Manifest manif) {
   // iterate through manif.tests and extract values
   // return vector of test files
   std::vector<std::string> test_files;
@@ -143,7 +150,7 @@ std::vector<std::string> Tester::get_test_files(Manifest manif) {
  * @return true if the test passes
  * @return false if the test fails
  */
-bool Tester::run_one(std::string test_path) {
+bool TestBuilder::run_one(std::string test_path) {
   if (fs::exists(test_path)) {
     std::string BUILD_CMD = this->get_build_cmd(test_path);
     // create the build/tests directory if it doesn't exist
@@ -169,7 +176,7 @@ bool Tester::run_one(std::string test_path) {
  * @visibility PROTECTED
  * @brief Creates the build/tests directory if it doesn't exist
  */
-void Tester::test_builds() {
+void TestBuilder::test_builds() {
   if (!fs::exists("build/tests")) {
     fs::create_directory("build/tests");
   }
@@ -181,7 +188,7 @@ void Tester::test_builds() {
  *
  * @param build_cmd(std::string): The build command for the test
  */
-void Tester::build_test(std::string build_cmd) {
+void TestBuilder::build_test(std::string build_cmd) {
   try {
     system(build_cmd.c_str());
   } catch (std::exception &e) {
@@ -197,7 +204,7 @@ void Tester::build_test(std::string build_cmd) {
  * @return (true) if the test exits 0
  * @return (false) if the test exits 1 or any other value
  */
-bool Tester::invoke_test(std::string invoke_cmd) {
+bool TestBuilder::invoke_test(std::string invoke_cmd) {
   int result = system(invoke_cmd.c_str());
   switch (result) {
   case 0:
@@ -207,7 +214,8 @@ bool Tester::invoke_test(std::string invoke_cmd) {
   }
 }
 
-void Tester::show_passing(const std::string test_path, bool const passing) {
+void TestBuilder::show_passing(const std::string test_path,
+                               bool const passing) {
   switch (passing) {
   case true:
     this->logger.info(test_path + " --> " + "PASS");
