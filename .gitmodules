@@ -2,3 +2,6 @@
 	path = doc
 	url = https://github.com/phasewalk1/docsupra
 	
+[submodule "lib"]
+	path = lib
+	url = https://github.com/phasewalk1/libsupra
