@@ -1,0 +1,70 @@
+\hypertarget{parser_8hpp_source}{}\doxysection{parser.\+hpp}
+\label{parser_8hpp_source}\index{include/util/parser.hpp@{include/util/parser.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_PARSER\_H\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_PARSER\_H\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*\ **************************************************************************\ */}}
+\DoxyCodeLine{00005\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00006\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :::\ \ \ \ \ \ ::::::::\ \ \ */}}
+\DoxyCodeLine{00007\ \textcolor{comment}{/*\ \ \ parser.hpp\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :+:\ \ \ \ \ \ :+:\ \ \ \ :+:\ \ \ */}}
+\DoxyCodeLine{00008\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +:+\ +:+\ \ \ \ \ \ \ \ \ +:+\ \ \ \ \ */}}
+\DoxyCodeLine{00009\ \textcolor{comment}{/*\ \ \ By:\ phasewalk1\ <github.com/phasewalk1>\ \ \ \ +\#+\ \ +:+\ \ \ \ \ \ \ +\#+\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00010\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\#+\#+\#+\#+\#+\ \ \ +\#+\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00011\ \textcolor{comment}{/*\ \ \ Created:\ 2023/01/21\ 01:21:32\ by\ phasewalk1\ \ \ \ \ \ \ \#+\#\ \ \ \ \#+\#\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00012\ \textcolor{comment}{/*\ \ \ Updated:\ 2023/01/21\ 01:21:46\ by\ phasewalk1\ \ \ \ \ \ \#\#\#\ \ \ \#\#\#\#\#\#\#\#.fr\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00013\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00014\ \textcolor{comment}{/*\ **************************************************************************\ */}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}extern/toml.hpp"{}}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}util/manif.hpp"{}}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{namespace\ }parsing\ \{}
+\DoxyCodeLine{00035\ \textcolor{keyword}{enum}\ OPT\ \{}
+\DoxyCodeLine{00036\ \ \ NEW,}
+\DoxyCodeLine{00037\ \ \ CHECK,}
+\DoxyCodeLine{00038\ \ \ TEST,}
+\DoxyCodeLine{00039\ \ \ FMT,}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{class\ }Parser\ \{}
+\DoxyCodeLine{00052\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00053\ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00054\ \ \ Parser();}
+\DoxyCodeLine{00055\ \ \ Parser(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ **argv);}
+\DoxyCodeLine{00056\ \ \ \textcolor{comment}{//\ Convert\ argv\ to\ std::vector}}
+\DoxyCodeLine{00057\ \ \ std::vector<std::string>\ collect\_argv(\textcolor{keywordtype}{char}\ **argv);}
+\DoxyCodeLine{00058\ \ \ \textcolor{comment}{//\ Parse\ the\ mode\ to\ run\ in}}
+\DoxyCodeLine{00059\ \ \ OPT\ mode();}
+\DoxyCodeLine{00060\ \ \ \textcolor{comment}{//\ Ensure\ arg\ count\ is\ valid\ for\ the\ mode}}
+\DoxyCodeLine{00061\ \ \ \textcolor{keywordtype}{bool}\ ok();}
+\DoxyCodeLine{00062\ \ \ \textcolor{comment}{//\ Check\ if\ the\ args\ contain\ at\ least\ one\ flag}}
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordtype}{bool}\ has\_one\_flag();}
+\DoxyCodeLine{00064\ \ \ \textcolor{comment}{//\ Check\ if\ the\ args\ contain\ a\ specific\ flag}}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordtype}{bool}\ has\_flag(\textcolor{keyword}{const}\ std::string\ flag);}
+\DoxyCodeLine{00066\ \ \ \textcolor{comment}{//\ check\ if\ the\ args\ contain\ one\ of\ a\ list\ of\ flags}}
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{bool}\ has\_flags(\textcolor{keyword}{const}\ std::vector<std::string>\ flags);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00070\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ get\_argc()\ \{\ \textcolor{keywordflow}{return}\ this-\/>argc;\ \}}
+\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{inline}\ std::vector<std::string>\ get\_argv()\ \{\ \textcolor{keywordflow}{return}\ this-\/>argv;\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00074\ \ \ \textcolor{comment}{//\ argument\ count:\ for\ the\ runner}}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{int}\ argc;}
+\DoxyCodeLine{00076\ \ \ \textcolor{comment}{//\ argument\ vector:\ for\ the\ runner}}
+\DoxyCodeLine{00077\ \ \ std::vector<std::string>\ argv;}
+\DoxyCodeLine{00078\ \ \ \textcolor{comment}{//\ Mode\ that\ was\ parsed\ from\ 'parse()'}}
+\DoxyCodeLine{00079\ \ \ OPT\ opt;}
+\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00081\ \}\ \textcolor{comment}{//\ namespace\ parsing}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_PARSER\_H\_\_}}
+
+\end{DoxyCode}

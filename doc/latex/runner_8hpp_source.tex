@@ -1,0 +1,56 @@
+\hypertarget{runner_8hpp_source}{}\doxysection{runner.\+hpp}
+\label{runner_8hpp_source}\index{include/util/runner.hpp@{include/util/runner.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_RUNNER\_H\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_RUNNER\_H\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*\ **************************************************************************\ */}}
+\DoxyCodeLine{00005\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00006\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :::\ \ \ \ \ \ ::::::::\ \ \ */}}
+\DoxyCodeLine{00007\ \textcolor{comment}{/*\ \ \ runner.hpp\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :+:\ \ \ \ \ \ :+:\ \ \ \ :+:\ \ \ */}}
+\DoxyCodeLine{00008\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +:+\ +:+\ \ \ \ \ \ \ \ \ +:+\ \ \ \ \ */}}
+\DoxyCodeLine{00009\ \textcolor{comment}{/*\ \ \ By:\ phasewalk1\ <github.com/phasewalk1>\ \ \ \ +\#+\ \ +:+\ \ \ \ \ \ \ +\#+\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00010\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\#+\#+\#+\#+\#+\ \ \ +\#+\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00011\ \textcolor{comment}{/*\ \ \ Created:\ 2023/01/21\ 13:00:13\ by\ phasewalk1\ \ \ \ \ \ \ \#+\#\ \ \ \ \#+\#\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00012\ \textcolor{comment}{/*\ \ \ Updated:\ 2023/01/21\ 13:00:15\ by\ phasewalk1\ \ \ \ \ \ \#\#\#\ \ \ \#\#\#\#\#\#\#\#.fr\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00013\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00014\ \textcolor{comment}{/*\ **************************************************************************\ */}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}cmd/tester.hpp"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}util/logger.hpp"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}util/manif.hpp"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}util/parser.hpp"{}}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{using\ }\mbox{\hyperlink{classmanif_1_1_manif_parser}{manif::ManifParser}};}
+\DoxyCodeLine{00022\ \textcolor{keyword}{using\ }parsing::OPT;}
+\DoxyCodeLine{00023\ \textcolor{keyword}{using\ }parsing::Parser;}
+\DoxyCodeLine{00024\ \textcolor{keyword}{using\ }\mbox{\hyperlink{classtesting_1_1_test_builder}{testing::TestBuilder}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{namespace\ }runner\ \{}
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }Runner\ \{}
+\DoxyCodeLine{00038\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ Runner(std::vector<std::string>\ args);}
+\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ set\_parser(\textcolor{keyword}{const}\ Parser\ parser)\ \{\ this-\/>cparser\ =\ parser;\ \};}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ set\_manif\_parser(\textcolor{keyword}{const}\ \mbox{\hyperlink{classmanif_1_1_manif_parser}{ManifParser}}\ parser)\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ this-\/>mparser\ =\ parser;}
+\DoxyCodeLine{00043\ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ run(OPT\ mode);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047\ \ \ Parser\ cparser;}
+\DoxyCodeLine{00048\ \ \ std::optional<ManifParser>\ mparser;}
+\DoxyCodeLine{00049\ \ \ std::vector<std::string>\ args;}
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordtype}{size\_t}\ argc;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ instantiate(std::string\ path,\ \textcolor{keywordtype}{bool}\ force,\ \textcolor{keywordtype}{bool}\ with\_benches);}
+\DoxyCodeLine{00053\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ check();}
+\DoxyCodeLine{00054\ \ \ \textcolor{keyword}{virtual}\ std::tuple<TestBuilder,\ std::vector<std::string>>\ setup\_tester();}
+\DoxyCodeLine{00055\ \ \ \textcolor{keyword}{virtual}\ std::tuple<TestBuilder,\ std::map<std::string,\ bool>>\ test();}
+\DoxyCodeLine{00056\ \ \ std::tuple<std::string,\ bool,\ bool>\ get\_new\_args();}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ \}\ \textcolor{comment}{//\ namespace\ runner}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_RUNNER\_H\_\_}}
+
+\end{DoxyCode}

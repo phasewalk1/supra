@@ -1,0 +1,118 @@
+\hypertarget{tester_8hpp_source}{}\doxysection{tester.\+hpp}
+\label{tester_8hpp_source}\index{include/cmd/tester.hpp@{include/cmd/tester.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_TESTER\_H\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_TESTER\_H\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*\ **************************************************************************\ */}}
+\DoxyCodeLine{00005\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00006\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :::\ \ \ \ \ \ ::::::::\ \ \ */}}
+\DoxyCodeLine{00007\ \textcolor{comment}{/*\ \ \ tester.hpp\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :+:\ \ \ \ \ \ :+:\ \ \ \ :+:\ \ \ */}}
+\DoxyCodeLine{00008\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +:+\ +:+\ \ \ \ \ \ \ \ \ +:+\ \ \ \ \ */}}
+\DoxyCodeLine{00009\ \textcolor{comment}{/*\ \ \ By:\ phasewalk1\ <github.com/phasewalk1>\ \ \ \ +\#+\ \ +:+\ \ \ \ \ \ \ +\#+\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00010\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\#+\#+\#+\#+\#+\ \ \ +\#+\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00011\ \textcolor{comment}{/*\ \ \ Created:\ 2023/01/21\ 17:33:29\ by\ phasewalk1\ \ \ \ \ \ \ \#+\#\ \ \ \ \#+\#\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00012\ \textcolor{comment}{/*\ \ \ Updated:\ 2023/01/21\ 17:33:30\ by\ phasewalk1\ \ \ \ \ \ \#\#\#\ \ \ \#\#\#\#\#\#\#\#.fr\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00013\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00014\ \textcolor{comment}{/*\ **************************************************************************\ */}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}util/logger.hpp"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}util/parser.hpp"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacetesting}{testing}}\ \{}
+\DoxyCodeLine{00032\ \textcolor{comment}{/****************************************************************************}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *\ TestBuilder}}
+\DoxyCodeLine{00034\ \textcolor{comment}{}\textcolor{comment}{\ /***************************************************************************/}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtesting_1_1_test_builder}{TestBuilder}}\ \{}
+\DoxyCodeLine{00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00037\ \ \ \mbox{\hyperlink{classtesting_1_1_test_builder_aaacf7dc7a525062e3302a9c7e6772c8a}{TestBuilder}}();}
+\DoxyCodeLine{00038\ \ \ \mbox{\hyperlink{classtesting_1_1_test_builder_aaacf7dc7a525062e3302a9c7e6772c8a}{TestBuilder}}(std::string\ test\_dir);}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classtesting_1_1_test_builder_a8b8fb44c401c63a2e7c7e110c191e50c}{setup}}();}
+\DoxyCodeLine{00040\ \ \ std::map<std::string,\ bool>\ \mbox{\hyperlink{classtesting_1_1_test_builder_a7d8c24607de1ad6d6f2e12a1b0abc86d}{run}}(std::vector<std::string>\ test\_files);}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{virtual}\ std::vector<std::string>\ \mbox{\hyperlink{classtesting_1_1_test_builder_a894e7f3a3cb261c4e31fbe229abd6a68}{get\_test\_files}}(\mbox{\hyperlink{structmanif_1_1_manifest}{manif::Manifest}}\ manif);}
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classtesting_1_1_test_builder_a4b2b49ab8be4146ea1446bbfd1cd044a}{run\_one}}(std::string\ test\_path);}
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classtesting_1_1_test_builder_abf78ec7223b5f21e30c32be0e51bdb38}{dump\_results}}(std::map<std::string,\ bool>\ results);}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ show\_passing(\textcolor{keyword}{const}\ std::string\ test\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ passing);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00047\ \ \ std::string\ TEST\_DIR;}
+\DoxyCodeLine{00048\ \ \ std::string\ BUILD\_CMD;}
+\DoxyCodeLine{00049\ \ \ \mbox{\hyperlink{class_logger}{Logger}}\ logger;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classtesting_1_1_test_builder_afd698b9df6fe1a8b4ca1b15884dd1d36}{test\_builds}}();}
+\DoxyCodeLine{00052\ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{classtesting_1_1_test_builder_a83e0db0521334da8be61292cd32ad3a5}{get\_build\_cmd}}(\textcolor{keyword}{const}\ std::string\ test\_path);}
+\DoxyCodeLine{00053\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classtesting_1_1_test_builder_a4ec1cfc2f383dac34ffc5488d699e6b0}{build\_test}}(std::string\ build\_cmd);}
+\DoxyCodeLine{00054\ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{classtesting_1_1_test_builder_a5b5b067b40209bf1c6347078b20247f0}{get\_invoke\_cmd}}(\textcolor{keyword}{const}\ std::string\ test\_path);}
+\DoxyCodeLine{00055\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classtesting_1_1_test_builder_a7052cdd1a2a8334b0ad5e0927d3c9da8}{invoke\_test}}(std::string\ invoke\_cmd);}
+\DoxyCodeLine{00056\ \};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{comment}{/****************************************************************************}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ *\ SupraException}}
+\DoxyCodeLine{00060\ \textcolor{comment}{}\textcolor{comment}{\ /***************************************************************************/}}
+\DoxyCodeLine{00061\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtesting_1_1_supra_exception}{SupraException}}\ :\ \textcolor{keyword}{public}\ std::exception\ \{}
+\DoxyCodeLine{00062\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \mbox{\hyperlink{classtesting_1_1_supra_exception}{SupraException}}(std::string\ msg)\ \{\ this-\/>msg\ =\ msg;\ \};}
+\DoxyCodeLine{00064\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ what()\ \textcolor{keyword}{const}\ \textcolor{keywordflow}{throw}()\ \{\ \textcolor{keywordflow}{return}\ this-\/>msg.c\_str();\ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00067\ \ \ std::string\ msg;}
+\DoxyCodeLine{00068\ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtesting_1_1_supra_writer_exception}{SupraWriterException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classtesting_1_1_supra_exception}{SupraException}}\ \{}
+\DoxyCodeLine{00071\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00072\ \ \ \mbox{\hyperlink{classtesting_1_1_supra_writer_exception}{SupraWriterException}}(std::string\ msg)\ :\ \mbox{\hyperlink{classtesting_1_1_supra_exception}{SupraException}}(msg)\ \{\}}
+\DoxyCodeLine{00073\ \};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{comment}{/****************************************************************************}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SupraTest}}
+\DoxyCodeLine{00077\ \textcolor{comment}{}\textcolor{comment}{\ /***************************************************************************/}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#define\ SUPRA\_PASS\ 0}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#define\ SUPRA\_FAIL\ 1}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{inline}\ std::string\ get\_test\_template(std::string\ name)\ \{}
+\DoxyCodeLine{00082\ \ \ std::string\ temp\ =\ \textcolor{stringliteral}{"{}//\ "{}}\ +\ name\ +\ \textcolor{stringliteral}{"{}.cpp\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00083\ \ \ temp\ +=\ \textcolor{stringliteral}{"{}\#include\ <iostream>\(\backslash\)n\#include\ <supra/tester.hpp>\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00084\ \ \ temp\ +=\ \textcolor{stringliteral}{"{}//\ Define\ test\ behavior\(\backslash\)nstd::optional<testing::SupraException>\ test()\ \{\};\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00085\ \ \ temp\ +=\ \textcolor{stringliteral}{"{}//\ Run\ the\ test\(\backslash\)nint\ main()\ \{\(\backslash\)n"{}};}
+\DoxyCodeLine{00086\ \ \ temp\ +=\ \textcolor{stringliteral}{"{}\ \ return\ 0;\(\backslash\)n"{}};}
+\DoxyCodeLine{00087\ \ \ temp\ +=\ \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}};}
+\DoxyCodeLine{00088\ \ \ \textcolor{keywordflow}{return}\ temp;}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtesting_1_1_test_writer}{TestWriter}}\ \{}
+\DoxyCodeLine{00092\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00093\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ write(std::string\ name)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ walk\ up\ or\ down\ to\ get\ to\ the\ root\ of\ the\ project\ where\ "{}supra.toml"{}\ is}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ located}}
+\DoxyCodeLine{00096\ \ \ \ \ std::filesystem::path\ look(\textcolor{stringliteral}{"{}."{}});}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{while}\ (look.has\_relative\_path())\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::filesystem::exists(look\ /\ \textcolor{stringliteral}{"{}supra.toml"{}}))\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ look\ =\ look\ /\ \textcolor{stringliteral}{"{}.."{}};}
+\DoxyCodeLine{00102\ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ std::string\ path\ =\ \textcolor{stringliteral}{"{}tests/"{}}\ +\ name\ +\ \textcolor{stringliteral}{"{}.cpp"{}};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{if}\ (std::filesystem::exists(path)\ \&\&\ !(std::filesystem::is\_empty(path)))\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classtesting_1_1_supra_writer_exception}{testing::SupraWriterException}}(}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Error:\ Test\ <"{}}\ +\ path\ +\ \textcolor{stringliteral}{"{}>\ already\ exists\ and\ is\ not\ an\ empty\ file"{}});}
+\DoxyCodeLine{00108\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \textcolor{comment}{//\ create\ the\ tests\ directory\ if\ it\ doesn't\ exist}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::filesystem::exists(\textcolor{stringliteral}{"{}tests"{}}))\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ std::filesystem::create\_directory(\textcolor{stringliteral}{"{}tests"{}});}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \textcolor{comment}{//\ create\ the\ test\ file}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ std::ofstream\ test\_file;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ test\_file.open(path);}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ test\_file\ <<\ testing::get\_test\_template(name);}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ test\_file.close();}
+\DoxyCodeLine{00118\ \ \ \ \ \}}
+\DoxyCodeLine{00119\ \ \ \}}
+\DoxyCodeLine{00120\ \};}
+\DoxyCodeLine{00121\ \}\ \textcolor{comment}{//\ namespace\ testing}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_TESTER\_H\_\_}}
+
+\end{DoxyCode}

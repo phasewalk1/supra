@@ -1,0 +1,156 @@
+\begin{quote}
+For \texorpdfstring{$<$}{<}C++17\texorpdfstring{$>$}{>} and beyond. \end{quote}
+{\ttfamily supra} is a toolkit that attempts to offer modernized development workflows to C++ developers. If you\textquotesingle{}re familiar with {\ttfamily cargo} or {\ttfamily npm}, then {\ttfamily supra} will feel right at home in your toolbelt.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Features}\label{md__r_e_a_d_m_e_autotoc_md1}
+{\ttfamily supra} attempts to incorporate many of the widely loved features from Rusts amazing package manager/development tooling kit, {\ttfamily cargo}. Hence, {\ttfamily supra} plans on implementing the following features
+
+
+\begin{DoxyItemize}
+\item \mbox{[}x\mbox{]} {\ttfamily supra new} -\/ Initializes a new C++ project with {\ttfamily src/}, {\ttfamily tests/}, a \char`\"{}hello world\char`\"{} file in {\ttfamily src/main.\+cpp}, and a {\ttfamily Makefile} for custom builds. After creating these files and directories, {\ttfamily supra} instantiates the new workspace as a git repository.
+\item \mbox{[}x\mbox{]} {\ttfamily supra fmt} -\/ Using {\ttfamily clang-\/format -\/-\/style=LLVM}, recursively formats an entire C++ workspace.
+\item \mbox{[}x\mbox{]} {\ttfamily supra test} -\/ Runs through the {\ttfamily tests/} directory and executes any test that is defined. Outputting information in a clear and concise manner. Output ceases on failure while pointing to which test failed.
+\end{DoxyItemize}
+
+\begin{quote}
+Still updating {\ttfamily supra test} \end{quote}
+
+\begin{DoxyItemize}
+\item \mbox{[} \mbox{]} {\ttfamily supra bench} -\/ Executes all benchmarks defined in {\ttfamily benches/}, outputting their results.
+\item \mbox{[} \mbox{]} {\ttfamily supra add} -\/ Adds a package to the {\itshape supra manifest}, {\ttfamily supra.\+toml}. The {\itshape supra manifest} is a file that describes your project, its version, dependencies, and dev dependencies (dependencies needed only to compile tests/benches)
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Install}\label{md__r_e_a_d_m_e_autotoc_md2}
+From the root directory, build the binary for {\ttfamily supra} by running {\ttfamily make}. Once you have the {\ttfamily supra} binary, copy it to somewhere in your shell\textquotesingle{}s path, such as
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo\ cp\ supra\ /usr/local/bin/supra}
+
+\end{DoxyCode}
+
+
+You can now use {\ttfamily supra} to instantiate new C++ projects
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{supra\ new\ my\_project}
+
+\end{DoxyCode}
+
+
+This will create a new workspace entitled {\ttfamily my\+\_\+project} with the following directory structure
+
+
+\begin{DoxyItemize}
+\item .git/
+\item bin/
+\item build/
+\item include/
+\item src/
+\begin{DoxyItemize}
+\item main.\+cpp
+\end{DoxyItemize}
+\item tests/
+\item Makefile
+\end{DoxyItemize}
+
+The default Makefile will look like this\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{NAME\ =\ my\_proj}
+\DoxyCodeLine{}
+\DoxyCodeLine{CC\ =\ g++}
+\DoxyCodeLine{CFLAGS\ =\ -\/Wall\ -\/Wextra\ -\/Werror\ -\/std=c++17}
+\DoxyCodeLine{}
+\DoxyCodeLine{SRC\_DIR\ =\ src}
+\DoxyCodeLine{INC\_DIR\ =\ include}
+\DoxyCodeLine{OBJ\_DIR\ =\ build}
+\DoxyCodeLine{BIN\_DIR\ =\ bin}
+\DoxyCodeLine{}
+\DoxyCodeLine{SRC\ =\ \$(wildcard\ \$(SRC\_DIR)/*.cpp)}
+\DoxyCodeLine{OBJ\ =\ \$(SRC:\$(SRC\_DIR)/\%.cpp=\$(OBJ\_DIR)/\%.o)}
+\DoxyCodeLine{}
+\DoxyCodeLine{all:\ \$(BIN\_DIR)/\$(NAME)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\$(BIN\_DIR)/\$(NAME):\ \$(OBJ)}
+\DoxyCodeLine{\ \ \ \ \$(CC)\ \$(CFLAGS)\ -\/I\ \$(INC\_DIR)\ -\/o\ \$@\ \$(OBJ)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\$(OBJ\_DIR)/\%.o:\ \$(SRC\_DIR)/\%.cpp}
+\DoxyCodeLine{\ \ \ \ @mkdir\ -\/p\ \$(OBJ\_DIR)}
+\DoxyCodeLine{\ \ \ \ \$(CC)\ \$(CFLAGS)\ -\/I\ \$(INC\_DIR)\ -\/c\ \$<\ -\/o\ \$@}
+\DoxyCodeLine{}
+\DoxyCodeLine{clean:}
+\DoxyCodeLine{\ \ \ \ rm\ -\/f\ \$(OBJ\_DIR)}
+\DoxyCodeLine{}
+\DoxyCodeLine{fclean:\ clean}
+\DoxyCodeLine{\ \ \ \ rm\ -\/f\ \$(NAME)}
+\DoxyCodeLine{}
+\DoxyCodeLine{re:\ fclean\ all}
+\DoxyCodeLine{}
+\DoxyCodeLine{.PHONY:\ all\ clean\ fclean\ re}
+
+\end{DoxyCode}
+
+
+Thus, build files ({\ttfamily .o}) will be outputted to the {\ttfamily build} directory, while the final executable will be sent to {\ttfamily bin}.
+
+{\ttfamily supra new} can be run in {\ttfamily bench} mode to support the inclusion of an additional directory, {\ttfamily benches} which will, in the future, be used to run integrated benchmarks with {\ttfamily supra bench}. To run {\ttfamily supra new} in bench mode, toggle the following flag\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{supra\ new\ my\_project\ -\/b}
+
+\end{DoxyCode}
+
+
+Or,
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{supra\ new\ my\_project\ -\/-\/with-\/benches}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{Building Supra Tests}\label{md__r_e_a_d_m_e_autotoc_md3}
+To build integrated tests in your {\ttfamily supra} project, or the tests in this repository, you will need a local installation of \href{https://github.com/phasewalk1/libsupra}{\texttt{ libsupra}} (the {\ttfamily supra} headers). To install {\ttfamily libsupra} locally,
+
+
+\begin{DoxyEnumerate}
+\item Clone \href{https://github.com/phasewalk1/libsupra}{\texttt{ libsupra}}.
+\item Move/copy \href{https://github.com/phasewalk1/libsupra}{\texttt{ libsupra}} into your system\textquotesingle{}s include paths.
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{Writing Supra Tests}\label{md__r_e_a_d_m_e_autotoc_md4}
+Below is an example {\ttfamily supra} test that tests the behavior of an integer function, {\ttfamily add} that we defined in a header file {\ttfamily intmath}\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \{C++\}}
+\DoxyCodeLine{\#include\ <iostream>}
+\DoxyCodeLine{\#include\ <supra/tester.hpp>}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#define\ SUPRA\_TEST\ true}
+\DoxyCodeLine{using\ testing::SupraException;}
+\DoxyCodeLine{using\ testing::SUPRA\_FAIL;}
+\DoxyCodeLine{using\ testing::SUPRA\_PASS;}
+\DoxyCodeLine{}
+\DoxyCodeLine{/******************************************************************************}
+\DoxyCodeLine{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Define\ behavior\ of\ the\ test\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *}
+\DoxyCodeLine{\ ******************************************************************************/}
+\DoxyCodeLine{std::optional<SupraException>\ test()\ \{}
+\DoxyCodeLine{\ \ if\ (add(10,\ 2)\ !=\ 12)\ \{}
+\DoxyCodeLine{\ \ \ \ return\ SupraException("{}add()\ failed\ at:\ add(10,2)"{});}
+\DoxyCodeLine{\ \ \}\ else\ \{\ return\ nullopt;\ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{/******************************************************************************}
+\DoxyCodeLine{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Run\ the\ Test\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *}
+\DoxyCodeLine{\ ******************************************************************************/}
+\DoxyCodeLine{int\ main()\ \{}
+\DoxyCodeLine{\ \ std::optional<SupraException>\ status\ =\ test();}
+\DoxyCodeLine{\ \ switch\ (status.has\_value())\ \{}
+\DoxyCodeLine{\ \ case\ SUPRA\_FAIL:}
+\DoxyCodeLine{\ \ \ \ std::cerr\ <<\ status.value().what()\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ return\ 1;}
+\DoxyCodeLine{\ \ case\ SUPRA\_PASS:}
+\DoxyCodeLine{\ \ \ \ return\ 0;}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 

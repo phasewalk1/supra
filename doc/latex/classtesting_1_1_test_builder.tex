@@ -1,0 +1,227 @@
+\hypertarget{classtesting_1_1_test_builder}{}\doxysection{testing\+::Test\+Builder Class Reference}
+\label{classtesting_1_1_test_builder}\index{testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtesting_1_1_test_builder_aaacf7dc7a525062e3302a9c7e6772c8a}\label{classtesting_1_1_test_builder_aaacf7dc7a525062e3302a9c7e6772c8a}} 
+{\bfseries Test\+Builder} ()
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classtesting_1_1_test_builder}{Test\+Builder}}\+:\+: \mbox{\hyperlink{classtesting_1_1_test_builder}{Test\+Builder}} object @dev Sets the TEST\+\_\+\+DIR to the default value and the BUILD\+\_\+\+CMD to the default value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtesting_1_1_test_builder_af98e4f4933126d73db5ce8941beee89b}{Test\+Builder}} (std\+::string test\+\_\+dir)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classtesting_1_1_test_builder}{Test\+Builder}}\+:\+: \mbox{\hyperlink{classtesting_1_1_test_builder}{Test\+Builder}} object @dev Sets the TEST\+\_\+\+DIR to the specified value and the BUILD\+\_\+\+CMD to the default value. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a8b8fb44c401c63a2e7c7e110c191e50c}\label{classtesting_1_1_test_builder_a8b8fb44c401c63a2e7c7e110c191e50c}} 
+virtual void {\bfseries setup} ()
+\begin{DoxyCompactList}\small\item\em Performs the setup for the \mbox{\hyperlink{classtesting_1_1_test_builder}{Test\+Builder}} @dev Creates \char`\"{}build/tests/\char`\"{} directory if it doesn\textquotesingle{}t exist. \end{DoxyCompactList}\item 
+std\+::map$<$ std\+::string, bool $>$ \mbox{\hyperlink{classtesting_1_1_test_builder_a7d8c24607de1ad6d6f2e12a1b0abc86d}{run}} (std\+::vector$<$ std\+::string $>$ test\+\_\+files)
+\begin{DoxyCompactList}\small\item\em Runs the tests in the tests/ directory @dev Iterates through the tests/ directory and runs each test. \end{DoxyCompactList}\item 
+virtual std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classtesting_1_1_test_builder_a894e7f3a3cb261c4e31fbe229abd6a68}{get\+\_\+test\+\_\+files}} (\mbox{\hyperlink{structmanif_1_1_manifest}{manif\+::\+Manifest}} manif)
+\begin{DoxyCompactList}\small\item\em Get a list of test files from the manifest (saleen.\+toml) \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classtesting_1_1_test_builder_a4b2b49ab8be4146ea1446bbfd1cd044a}{run\+\_\+one}} (std\+::string test\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Runs a single test file. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtesting_1_1_test_builder_abf78ec7223b5f21e30c32be0e51bdb38}{dump\+\_\+results}} (std\+::map$<$ std\+::string, bool $>$ results)
+\begin{DoxyCompactList}\small\item\em Dumps the map of test results to the console. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a19e53286153a284911034625050222a4}\label{classtesting_1_1_test_builder_a19e53286153a284911034625050222a4}} 
+virtual void {\bfseries show\+\_\+passing} (const std\+::string test\+\_\+path, const bool passing)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{classtesting_1_1_test_builder_afd698b9df6fe1a8b4ca1b15884dd1d36}{test\+\_\+builds}} ()
+\begin{DoxyCompactList}\small\item\em Creates the build/tests directory if it doesn\textquotesingle{}t exist. \end{DoxyCompactList}\item 
+virtual std\+::string \mbox{\hyperlink{classtesting_1_1_test_builder_a83e0db0521334da8be61292cd32ad3a5}{get\+\_\+build\+\_\+cmd}} (const std\+::string test\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Gets the build command for a single test. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtesting_1_1_test_builder_a4ec1cfc2f383dac34ffc5488d699e6b0}{build\+\_\+test}} (std\+::string build\+\_\+cmd)
+\begin{DoxyCompactList}\small\item\em Builds a test. \end{DoxyCompactList}\item 
+virtual std\+::string \mbox{\hyperlink{classtesting_1_1_test_builder_a5b5b067b40209bf1c6347078b20247f0}{get\+\_\+invoke\+\_\+cmd}} (const std\+::string test\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Gets the run command for a single test. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classtesting_1_1_test_builder_a7052cdd1a2a8334b0ad5e0927d3c9da8}{invoke\+\_\+test}} (std\+::string invoke\+\_\+cmd)
+\begin{DoxyCompactList}\small\item\em Invokes a test. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a0c0e4cfec9959f1a21c53acb3f125f99}\label{classtesting_1_1_test_builder_a0c0e4cfec9959f1a21c53acb3f125f99}} 
+std\+::string {\bfseries TEST\+\_\+\+DIR}
+\item 
+\mbox{\Hypertarget{classtesting_1_1_test_builder_aa42d782750b4265aa2af70eafa4d94ee}\label{classtesting_1_1_test_builder_aa42d782750b4265aa2af70eafa4d94ee}} 
+std\+::string {\bfseries BUILD\+\_\+\+CMD}
+\item 
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a04817c37263915ca17ddc35265962a2d}\label{classtesting_1_1_test_builder_a04817c37263915ca17ddc35265962a2d}} 
+\mbox{\hyperlink{class_logger}{Logger}} {\bfseries logger}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_af98e4f4933126d73db5ce8941beee89b}\label{classtesting_1_1_test_builder_af98e4f4933126d73db5ce8941beee89b}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!TestBuilder@{TestBuilder}}
+\index{TestBuilder@{TestBuilder}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{TestBuilder()}{TestBuilder()}}
+{\footnotesize\ttfamily Test\+Builder\+::\+Test\+Builder (\begin{DoxyParamCaption}\item[{std\+::string}]{test\+\_\+dir }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classtesting_1_1_test_builder}{Test\+Builder}}\+:\+: \mbox{\hyperlink{classtesting_1_1_test_builder}{Test\+Builder}} object @dev Sets the TEST\+\_\+\+DIR to the specified value and the BUILD\+\_\+\+CMD to the default value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+dir(std\+::string)} & The path to the tests/ directory \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a4ec1cfc2f383dac34ffc5488d699e6b0}\label{classtesting_1_1_test_builder_a4ec1cfc2f383dac34ffc5488d699e6b0}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!build\_test@{build\_test}}
+\index{build\_test@{build\_test}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{build\_test()}{build\_test()}}
+{\footnotesize\ttfamily void Test\+Builder\+::build\+\_\+test (\begin{DoxyParamCaption}\item[{std\+::string}]{build\+\_\+cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Builds a test. 
+
+@visibility PROTECTED 
+
+
+\begin{DoxyParams}{Parameters}
+{\em build\+\_\+cmd(std\+::string)} & The build command for the test \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_abf78ec7223b5f21e30c32be0e51bdb38}\label{classtesting_1_1_test_builder_abf78ec7223b5f21e30c32be0e51bdb38}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!dump\_results@{dump\_results}}
+\index{dump\_results@{dump\_results}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{dump\_results()}{dump\_results()}}
+{\footnotesize\ttfamily void Test\+Builder\+::dump\+\_\+results (\begin{DoxyParamCaption}\item[{std\+::map$<$ std\+::string, bool $>$}]{results }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Dumps the map of test results to the console. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em results(std\+::map$<$std\+::string,bool$>$)} & A map of test names and their results \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a83e0db0521334da8be61292cd32ad3a5}\label{classtesting_1_1_test_builder_a83e0db0521334da8be61292cd32ad3a5}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!get\_build\_cmd@{get\_build\_cmd}}
+\index{get\_build\_cmd@{get\_build\_cmd}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{get\_build\_cmd()}{get\_build\_cmd()}}
+{\footnotesize\ttfamily std\+::string Test\+Builder\+::get\+\_\+build\+\_\+cmd (\begin{DoxyParamCaption}\item[{const std\+::string}]{test\+\_\+path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Gets the build command for a single test. 
+
+@visibility PROTECTED 
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+path(std\+::string)} & The path to the test file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(std\+::string)\+: The build command for the test 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a5b5b067b40209bf1c6347078b20247f0}\label{classtesting_1_1_test_builder_a5b5b067b40209bf1c6347078b20247f0}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!get\_invoke\_cmd@{get\_invoke\_cmd}}
+\index{get\_invoke\_cmd@{get\_invoke\_cmd}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{get\_invoke\_cmd()}{get\_invoke\_cmd()}}
+{\footnotesize\ttfamily std\+::string Test\+Builder\+::get\+\_\+invoke\+\_\+cmd (\begin{DoxyParamCaption}\item[{const std\+::string}]{test\+\_\+path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Gets the run command for a single test. 
+
+@visibility PROTECTED 
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+path(std\+::string)} & The path to the test file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(std\+::string)\+: The run command for the test 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a894e7f3a3cb261c4e31fbe229abd6a68}\label{classtesting_1_1_test_builder_a894e7f3a3cb261c4e31fbe229abd6a68}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!get\_test\_files@{get\_test\_files}}
+\index{get\_test\_files@{get\_test\_files}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{get\_test\_files()}{get\_test\_files()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::string $>$ Test\+Builder\+::get\+\_\+test\+\_\+files (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmanif_1_1_manifest}{manif\+::\+Manifest}}}]{manif }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get a list of test files from the manifest (saleen.\+toml) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em manif(\+Manifest)} & The manifest (saleen.\+toml) object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$std\+::string$>$\+: A vector of test file paths 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a7052cdd1a2a8334b0ad5e0927d3c9da8}\label{classtesting_1_1_test_builder_a7052cdd1a2a8334b0ad5e0927d3c9da8}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!invoke\_test@{invoke\_test}}
+\index{invoke\_test@{invoke\_test}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{invoke\_test()}{invoke\_test()}}
+{\footnotesize\ttfamily bool Test\+Builder\+::invoke\+\_\+test (\begin{DoxyParamCaption}\item[{std\+::string}]{invoke\+\_\+cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Invokes a test. 
+
+@visibility PROTECTED 
+
+
+\begin{DoxyParams}{Parameters}
+{\em invoke\+\_\+cmd(std\+::string)} & The invoke command for the test \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(true) if the test exits 0 
+
+(false) if the test exits 1 or any other value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a7d8c24607de1ad6d6f2e12a1b0abc86d}\label{classtesting_1_1_test_builder_a7d8c24607de1ad6d6f2e12a1b0abc86d}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!run@{run}}
+\index{run@{run}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily std\+::map$<$ std\+::string, bool $>$ Test\+Builder\+::run (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$}]{test\+\_\+files }\end{DoxyParamCaption})}
+
+
+
+Runs the tests in the tests/ directory @dev Iterates through the tests/ directory and runs each test. 
+
+\begin{DoxyReturn}{Returns}
+std\+::map$<$std\+::string, bool$>$\+: A map of test names and their results 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_a4b2b49ab8be4146ea1446bbfd1cd044a}\label{classtesting_1_1_test_builder_a4b2b49ab8be4146ea1446bbfd1cd044a}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!run\_one@{run\_one}}
+\index{run\_one@{run\_one}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{run\_one()}{run\_one()}}
+{\footnotesize\ttfamily bool Test\+Builder\+::run\+\_\+one (\begin{DoxyParamCaption}\item[{std\+::string}]{test\+\_\+path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Runs a single test file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+path(std\+::string)} & The path to the test file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the test passes 
+
+false if the test fails 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtesting_1_1_test_builder_afd698b9df6fe1a8b4ca1b15884dd1d36}\label{classtesting_1_1_test_builder_afd698b9df6fe1a8b4ca1b15884dd1d36}} 
+\index{testing::TestBuilder@{testing::TestBuilder}!test\_builds@{test\_builds}}
+\index{test\_builds@{test\_builds}!testing::TestBuilder@{testing::TestBuilder}}
+\doxysubsubsection{\texorpdfstring{test\_builds()}{test\_builds()}}
+{\footnotesize\ttfamily void Test\+Builder\+::test\+\_\+builds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Creates the build/tests directory if it doesn\textquotesingle{}t exist. 
+
+@visibility PROTECTED 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/cmd/tester.\+hpp\item 
+src/tester.\+cpp\end{DoxyCompactItemize}
