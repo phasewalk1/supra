@@ -92,6 +92,39 @@ Or,
 supra new my_project --with-benches
 ```
 
+## Further Use
+### More about `new`
+`supra new` can also be run to instantiate new tests. To create a new test called `send_msg.cpp`, we can invoke the `new` command as such:
+```sh
+supra new --test send_msg
+```
+This will create a new test in `tests/send_msg.cpp` with the following boilerplate:
+```C++
+#include <iostream>
+#include <supra/tester.hpp>
+
+// Define test behavior
+std::optional<testing::SupraException> test() {};
+
+// Run the test
+int main() {
+  return 0;
+}
+```
+### supra `fmt`
+`supra fmt` uses `clang-format` and follows the _LLVM_ styleguide. It utilizes a simple command which recursively seeks out all `.cpp` and `.hpp` files in a workspace, piping them off (in parallel) to `clang-format`. Under the hood, `supra fmt` performs this command:
+```bash
+find . -iname *.hpp -o -iname *.cpp | xargs -P 8 -n 2 clang-format -style=LLVM -i
+```
+This of course, would be cumbersome to type everytime you want to recursively format your entire project, hence, why `supra` provides the `fmt` wrapper. To perform the above operation and format your workspace, simply run `supra fmt` from the root of your project.
+
+### supra `test`
+The testing framework aimed to be built for `supra` is highly unstable and, as of now, only consists of a few small, core features. `supra test` uses a manifest file, `supra.toml` at the root of your workspace which enumerates `.cpp` test files to be ran by `supra test`. For example, if you have only a single test you'd like to run with the command, your _tests_ section of your project's manifest may look like so:
+```toml
+[tests]
+msg = "send_msg.cpp"
+```
+Where the key is our tests name and the value is the full filepath, relative to the `tests/` directory. This will likely be modified substantially in the future to make the enumeration process more ergonomic. Once we've defined our test(s) in our manifest, we can run `supra test`. Note: this will run only the tests within the `tests/` directory that are actively listed in the manifest. See below for more about writing/building _supra tests_.
 ## Documentation
 The master documentation statics can be found at [docsupra](https://github.com/phasewalk1/docsupra). Open [index.html](https://github.com/phasewalk1/docsupra/tree/master/docs/index.html) in the browser of your choice to view the documentation locally. An online version is also hosted at https://phasewalk1.github.io/docsupra.
 
