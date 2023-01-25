@@ -1,4 +1,4 @@
-# supra <img src="doc/supra.jpeg" height=300 align="right">
+# supra <img src="supra.jpeg" height=300 align="right">
 > For <C++17> and beyond.
 
 `supra` is a toolkit that attempts to offer modernized development workflows to C++ developers. If you're familiar with `cargo` or `npm`, then `supra` will feel right at home in your toolbelt.
